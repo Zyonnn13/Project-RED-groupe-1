@@ -90,7 +90,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	inventory := inventaire.NewInventory()
 
-	inventory.Additem("macdoc")
+	inventory.Additem("maxdoc")
 
 	inventory.Showinventory()
 
