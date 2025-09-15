@@ -19,8 +19,8 @@ func NewDesignplayer() *Designplayer {
 	p := &Designplayer{}
 
 	fmt.Println("                                                                                    Création de ton personnage                                                                ")
-	fmt.Println("\n")
-	fmt.Println("\n")
+	fmt.Println()
+	fmt.Println()
 
 	//Nom
 
