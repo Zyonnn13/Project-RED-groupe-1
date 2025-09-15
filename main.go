@@ -99,7 +99,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	inventory := inventaire.NewInventory()
 
-	inventory.Additem("Maxdoc")
+	inventory.Additem("Maxdoc M.K 1")
 
 	inventory.Showinventory()
 }
