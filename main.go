@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -39,9 +40,9 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("Choisis ta classe au sein de Night City")
 
 	p := &player.Player{}
-	fmt.Println("1 - corpo")
-	fmt.Println("2 - Nomade")
-	fmt.Println("3 - Gosse de rue")
+	fmt.Println("1 - corpo \n \033[32m Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie. \033[0m")
+	fmt.Println("2 - Nomade \n \033[32m Tu viens des Badlands, loin de la corruption de la ville. Ton clan t’a confié une mission : faire passer une cargaison illégale à travers les checkpoints de Night City. \033[0m ")
+	fmt.Println("3 - Gosse de rue \n \033[32m  Tu as grandi dans les ruelles de Heywood. Tu connais les gangs, les deals, et comment survivre. Mais aujourd’hui, un vieil ami te demande un service dangereux. \033[0m ")
 
 	var choice string
 	for {
@@ -60,6 +61,30 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 	p.ChooseClass(choice)
 
-	fmt.Printf("\n tu es un %s !\n", p.Class)
+	fmt.Printf("\n Tu es un %s !\n", p.Class)
+
+	character := player.NewDesignplayer()
+
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                        Ton personnage final                        ║")
+	fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
+	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s ║\n", "Nom", "Cheveux", "Yeux", "Taille")
+	fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
+	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s ║\n",
+		character.Name, character.Hair, character.Eyes, character.Height)
+	fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
+
+	reader = bufio.NewReader(os.Stdin)
+	fmt.Println("\n  Appuie sur Entrée pur démarrer l'histoire...")
+	reader.ReadString('\n')
+
+	switch choice {
+	case "1":
+		histoire.CorpoHistoire()
+	case "2":
+		histoire.NomadeHistoire()
+	case "3":
+		histoire.GosseHistoire()
+	}
 
 }
