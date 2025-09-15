@@ -13,6 +13,9 @@ type Designplayer struct {
 	Hair   string
 	Eyes   string
 	Height string
+	MaxHP  int
+	HP     int
+	Attack int
 }
 
 func NewDesignplayer() *Designplayer {
