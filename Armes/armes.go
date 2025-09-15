@@ -22,7 +22,7 @@ func (a Arme) Attaque() int {
 }
 
 var Pistolet1 = Arme{
-	Nom:        "Pistolet1",
+	Nom:        "Pistolet",
 	Degats:     10,
 	Precision:  0.40,
 	CritChance: 0.0,
@@ -30,14 +30,14 @@ var Pistolet1 = Arme{
 }
 
 var Pistolet2 = Arme{
-	Nom:        "Pistolet2",
+	Nom:        "Pistolet",
 	Degats:     10,
 	Precision:  0.40,
 	CritChance: 0.0,
 	Niveau:     2,
 }
 var Pistolet3 = Arme{
-	Nom:        "Pistolet3",
+	Nom:        "Pistolet",
 	Degats:     10,
 	Precision:  0.40,
 	CritChance: 0.0,
@@ -45,7 +45,7 @@ var Pistolet3 = Arme{
 }
 
 var Pistolet4 = Arme{
-	Nom:        "Pistolet4",
+	Nom:        "Pistolet",
 	Degats:     10,
 	Precision:  0.40,
 	CritChance: 0.0,
@@ -53,7 +53,7 @@ var Pistolet4 = Arme{
 }
 
 var Pistolet5 = Arme{
-	Nom:        "Pistolet5",
+	Nom:        "Pistolet",
 	Degats:     10,
 	Precision:  0.40,
 	CritChance: 0.0,
@@ -61,35 +61,35 @@ var Pistolet5 = Arme{
 }
 
 var Fusilspompe1 = Arme{
-	Nom:        "Fusils a pompe1",
+	Nom:        "Fusils a pompe",
 	Degats:     50,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     1,
 }
 var Fusilspompe2 = Arme{
-	Nom:        "Fusils a pompe2",
+	Nom:        "Fusils a pompe",
 	Degats:     50,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     2,
 }
 var Fusilspompe3 = Arme{
-	Nom:        "Fusils a pompe3",
+	Nom:        "Fusils a pompe",
 	Degats:     50,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     3,
 }
 var Fusilspompe4 = Arme{
-	Nom:        "Fusils a pompe4",
+	Nom:        "Fusils a pompe",
 	Degats:     50,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     4,
 }
 var Fusilspompe5 = Arme{
-	Nom:        "Fusils a pompe5",
+	Nom:        "Fusils a pompe",
 	Degats:     50,
 	Precision:  0.50,
 	CritChance: 0.0,
@@ -104,28 +104,28 @@ var Mitraillette = Arme{
 	Niveau:     1,
 }
 var Mitraillette2 = Arme{
-	Nom:        "Mitraillette2",
+	Nom:        "Mitraillette",
 	Degats:     35,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     2,
 }
 var Mitraillette3 = Arme{
-	Nom:        "Mitraillette3",
+	Nom:        "Mitraillette",
 	Degats:     35,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     3,
 }
 var Mitraillette4 = Arme{
-	Nom:        "Mitraillette4",
+	Nom:        "Mitraillette",
 	Degats:     35,
 	Precision:  0.50,
 	CritChance: 0.0,
 	Niveau:     4,
 }
 var Mitraillette5 = Arme{
-	Nom:        "Mitraillette5",
+	Nom:        "Mitraillette",
 	Degats:     35,
 	Precision:  0.50,
 	CritChance: 0.0,
@@ -133,7 +133,7 @@ var Mitraillette5 = Arme{
 }
 
 var Fusil1 = Arme{
-	Nom:        "Fusils d'Assault1",
+	Nom:        "Fusils d'Assault",
 	Degats:     55,
 	Precision:  0.60,
 	CritChance: 0.0,
@@ -141,69 +141,100 @@ var Fusil1 = Arme{
 }
 
 var Fusil2 = Arme{
-	Nom:        "Fusils d'Assault2",
+	Nom:        "Fusils d'Assault",
 	Degats:     55,
 	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     2,
 }
 var Fusil3 = Arme{
-	Nom:        "Fusils d'Assault3",
+	Nom:        "Fusils d'Assault",
 	Degats:     55,
 	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     3,
 }
 var Fusil4 = Arme{
-	Nom:        "Fusils d'Assault4",
+	Nom:        "Fusil d'Assault",
 	Degats:     55,
 	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     4,
 }
 var Fusil5 = Arme{
-	Nom:        "Fusils d'Assault5",
+	Nom:        "Fusil d'Assault",
 	Degats:     55,
 	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     5,
 }
-
-var FusilPrecision1 = Arme{
-	Nom:        "Fusils de Precision1",
-	Degats:     60,
-	Precision:  0.80,
+var Katana1 = Arme{
+	Nom:        "Katana",
+	Degats:     55,
+	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     1,
 }
-var FusilPrecision2 = Arme{
-	Nom:        "Fusils de Precision2",
-	Degats:     60,
-	Precision:  0.80,
+var Katana2 = Arme{
+	Nom:        "Katana",
+	Degats:     55,
+	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     2,
 }
-
-var FusilPrecision3 = Arme{
-	Nom:        "Fusils de Precision3",
-	Degats:     60,
-	Precision:  0.80,
+var Katana3 = Arme{
+	Nom:        "Katana",
+	Degats:     55,
+	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     3,
 }
-
-var FusilPrecision4 = Arme{
-	Nom:        "Fusils de Precision4",
-	Degats:     60,
-	Precision:  0.80,
+var Katana4 = Arme{
+	Nom:        "Katana",
+	Degats:     55,
+	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     4,
 }
-
-var FusilPrecision5 = Arme{
-	Nom:        "Fusils de Precision5",
-	Degats:     60,
-	Precision:  0.80,
+var Katana5 = Arme{
+	Nom:        "Katana",
+	Degats:     55,
+	Precision:  0.60,
+	CritChance: 0.0,
+	Niveau:     5,
+}
+var Couteau1 = Arme{
+	Nom:        "Couteau",
+	Degats:     55,
+	Precision:  0.60,
+	CritChance: 0.0,
+	Niveau:     1,
+}
+var Couteau2 = Arme{
+	Nom:        "Couteau",
+	Degats:     55,
+	Precision:  0.60,
+	CritChance: 0.0,
+	Niveau:     2,
+}
+var Couteau3 = Arme{
+	Nom:        "Couteau",
+	Degats:     55,
+	Precision:  0.60,
+	CritChance: 0.0,
+	Niveau:     3,
+}
+var Couteau4 = Arme{
+	Nom:        "Couteau",
+	Degats:     55,
+	Precision:  0.60,
+	CritChance: 0.0,
+	Niveau:     4,
+}
+var Couteau5 = Arme{
+	Nom:        "Couteau",
+	Degats:     55,
+	Precision:  0.60,
 	CritChance: 0.0,
 	Niveau:     5,
 }
