@@ -23,17 +23,27 @@ func NewDesignplayer() *Designplayer {
 	fmt.Println()
 	fmt.Println()
 
-	//Nom
+	// Nom
 	for {
 		fmt.Print(" Avant toutes choses tu dois choisir ton nom de personnage : ")
 		name, _ := reader.ReadString('\n')
-		p.Name = strings.TrimSpace(name)
+		name = strings.TrimSpace(name)
 
-		if len(name) > 0 && unicode.IsUpper(rune(name[0])) {
+		valid := true
+		for _, r := range name {
+			if !unicode.IsLetter(r) {
+				valid = false
+				break
+			}
+		}
+
+		if valid && len(name) > 0 {
+			name = strings.ToLower(name)
+			name = strings.Title(name)
 			p.Name = name
 			break
 		} else {
-			fmt.Println(" Le nom doit commencer par une Majuscule!!!!!")
+			fmt.Println(" Le nom doit contenir uniquement des lettres !")
 		}
 	}
 
