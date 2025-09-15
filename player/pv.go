@@ -1,6 +1,8 @@
 package player
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // États possibles du jeu
 type EtatJeu int

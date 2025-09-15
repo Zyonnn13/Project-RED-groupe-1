@@ -84,25 +84,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("\nTu entres dans le shop...")
 	pv.AfficherPV(etat)
 
-	// Début du combat
-	etat = player.EtatCombat
-	fmt.Println("\nUn combat commence !")
-	pv.SubirDegats(30)
-	pv.AfficherPV(etat)
-
-	// Soin dans le shop
-	etat = player.EtatShop
-	fmt.Println("\nTu te soignes dans le shop...")
-	pv.Soigner(20)
-	pv.AfficherPV(etat)
-
-	if pv.EstEnVie() {
-		fmt.Println("Tu es toujours en vie.")
-	} else {
-		fmt.Println("Tu es K.O.")
-	}
-	// === FIN DES AJOUTS ===
-
 	reader = bufio.NewReader(os.Stdin)
 	fmt.Println("\n  Appuie sur Entrée pour démarrer l'histoire...")
 	reader.ReadString('\n')
