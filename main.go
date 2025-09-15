@@ -2,6 +2,7 @@ package main
 
 import (
 	"Project-RED-groupe-1/histoire"
+	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -68,9 +69,9 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("\n╔════════════════════════════════════════════════════════════════════╗")
 	fmt.Println("║                        Ton personnage final                        ║")
 	fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
-	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s ║\n", "Nom", "Cheveux", "Yeux", "Taille")
+	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n", "Nom", "Cheveux", "Yeux", "Taille")
 	fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
-	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s ║\n",
+	fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n",
 		character.Name, character.Hair, character.Eyes, character.Height)
 	fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
 
@@ -114,4 +115,14 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	case "3":
 		histoire.GosseHistoire()
 	}
+<<<<<<< HEAD
+=======
+
+	inventory := inventaire.NewInventory()
+
+	inventory.Additem("maxdoc")
+
+	inventory.Showinventory()
+
+>>>>>>> 174c00b8b6f1ef774911627ffdf7b408e30caf09
 }
