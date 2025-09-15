@@ -1,7 +1,1 @@
-package shop
-
-import (
-	"fmt"
-)
-
-
+//shop
