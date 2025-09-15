@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode"
 )
 
 type Designplayer struct {
@@ -23,10 +24,18 @@ func NewDesignplayer() *Designplayer {
 	fmt.Println()
 
 	//Nom
+	for {
+		fmt.Print(" Avant toutes choses tu dois choisir ton nom de personnage : ")
+		name, _ := reader.ReadString('\n')
+		p.Name = strings.TrimSpace(name)
 
-	fmt.Print(" Avant toutes choses tu dois choisir ton nom de personnage : ")
-	name, _ := reader.ReadString('\n')
-	p.Name = strings.TrimSpace(name)
+		if len(name) > 0 && unicode.IsUpper(rune(name[0])) {
+			p.Name = name
+			break
+		} else {
+			fmt.Println(" Le nom doit commencer par une Majuscule!!!!!")
+		}
+	}
 
 	//Couleur de cheveux
 

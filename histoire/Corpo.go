@@ -1,7 +1,6 @@
 package histoire
 
 import (
-	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -17,7 +16,6 @@ func CorpoHistoire() {
 
 func StartCorpo(p *player.Designplayer) {
 	reader := bufio.NewReader(os.Stdin)
-	inv := inventaire.NewInventory() //inventaire joueur
 
 	fmt.Println(" 1- Accepter sans poser de questions ")
 	fmt.Println(" 2- [Corpo] Utiliser ton réseau pour saboter ton rival avant même la mission ")
@@ -25,5 +23,11 @@ func StartCorpo(p *player.Designplayer) {
 
 	choice, _ := reader.ReadString('\n')
 	choice = strings.TrimSpace(choice)
+
+	switch choice {
+	case "1":
+		fmt.Println("Jenkins t’accorde sa confiance, mais tu te retrouves sur le terrain face à des opposants.")
+
+	}
 
 }
