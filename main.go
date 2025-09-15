@@ -115,14 +115,10 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	case "3":
 		histoire.GosseHistoire()
 	}
-<<<<<<< HEAD
-=======
 
 	inventory := inventaire.NewInventory()
 
 	inventory.Additem("maxdoc")
 
 	inventory.Showinventory()
-
->>>>>>> 174c00b8b6f1ef774911627ffdf7b408e30caf09
 }
