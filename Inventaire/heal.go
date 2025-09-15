@@ -1,6 +1,6 @@
 package inventaire
 
 type Heal struct {
-	Maxdoc int
+	Maxdoc       int
 	Revitaliseur int
 }
