@@ -41,13 +41,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("Choisis ta classe au sein de Night City")
 
 	p := &player.Player{}
-	fmt.Println("1 - corpo \n \033[32m Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie. \033[0m")
+	fmt.Println("1 - Corpo \n \033[32m Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie. \033[0m")
 	fmt.Println("2 - Nomade \n \033[32m Tu viens des Badlands, loin de la corruption de la ville. Ton clan t’a confié une mission : faire passer une cargaison illégale à travers les checkpoints de Night City. \033[0m ")
 	fmt.Println("3 - Gosse de rue \n \033[32m  Tu as grandi dans les ruelles de Heywood. Tu connais les gangs, les deals, et comment survivre. Mais aujourd’hui, un vieil ami te demande un service dangereux. \033[0m ")
 
 	var choice string
 	for {
-		fmt.Print("ton choix; ")
+		fmt.Print("Ton choix; ")
 		choice, _ = reader.ReadString('\n')
 		choice = strings.TrimSpace(choice)
 
@@ -84,6 +84,26 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("\nTu entres dans le shop...")
 	pv.AfficherPV(etat)
 
+<<<<<<< HEAD
+=======
+	// Début du combat
+	etat = player.EtatCombat
+	fmt.Println("\nUn combat commence !")
+	pv.SubirDegats(30)
+	pv.AfficherPV(etat)
+
+	// Soin dans le shop
+	etat = player.EtatShop
+	fmt.Println("\nTu te soignes dans le shop...")
+	pv.Soigner(20)
+	pv.AfficherPV(etat)
+
+	if pv.EstEnVie() {
+		fmt.Println("Tu es toujours en vie.")
+	} else {
+		fmt.Println("Tu es K.O.")
+	}
+>>>>>>> c821ca6db85e9a044658eec1052cc8f72f59cfa5
 	// === FIN DES AJOUTS ===
 
 	reader = bufio.NewReader(os.Stdin)
@@ -101,7 +121,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	inventory := inventaire.NewInventory()
 
-	inventory.Additem("maxdoc")
+	inventory.Additem("Maxdoc")
 
 	inventory.Showinventory()
 }

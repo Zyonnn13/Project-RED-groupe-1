@@ -24,7 +24,7 @@ func NewDesignplayer() *Designplayer {
 
 	//Nom
 
-	fmt.Print(" Avan toute chose tu doit choisir ton nom de personnage : ")
+	fmt.Print(" Avant toutes choses tu dois choisir ton nom de personnage : ")
 	name, _ := reader.ReadString('\n')
 	p.Name = strings.TrimSpace(name)
 
@@ -62,7 +62,7 @@ func NewDesignplayer() *Designplayer {
 
 	//Couleur des yeux
 
-	fmt.Println("\n Choisis ta couleur des yeux.")
+	fmt.Println("\n Choisis la couleur de tes yeux.")
 	fmt.Println(" 1 : Noir ")
 	fmt.Println(" 2 : Rouge ")
 	fmt.Println(" 3 : Marron ")
