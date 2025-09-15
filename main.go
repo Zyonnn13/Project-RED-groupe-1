@@ -84,8 +84,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	fmt.Println("\nTu entres dans le shop...")
 	pv.AfficherPV(etat)
 
-<<<<<<< HEAD
-=======
 	// Début du combat
 	etat = player.EtatCombat
 	fmt.Println("\nUn combat commence !")
@@ -103,7 +101,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	} else {
 		fmt.Println("Tu es K.O.")
 	}
->>>>>>> c821ca6db85e9a044658eec1052cc8f72f59cfa5
 	// === FIN DES AJOUTS ===
 
 	reader = bufio.NewReader(os.Stdin)
