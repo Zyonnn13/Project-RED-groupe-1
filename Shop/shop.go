@@ -35,4 +35,25 @@ var Flash = Item{
 	Consommable: true,
 }
 
+var Redémarrage = Item{
+	Nom:         "Redémarrage optique",
+	Prix:        500,
+	Description: "Ce hack permet à son utilisateur de couper la vison d'un ennemi ce qui l'empêche d'attaquer au tour suivant. Cet effet est inefficace contre le boss final.",
+	Consommable: false,
+}
+
+var Surchauffe = Item{
+	Nom:         "Surchauffe",
+	Prix:        500,
+	Description: "Ce hack permet à son utilisateur de faire surchauffer les implants de son ennemi lui infligeant des dégâts sur 3 tours. Dégâts : légers.",
+	Consommable: false,
+}
+
+var Circuit = Item{
+	Nom:         "Court circuit",
+	Prix:        1000,
+	Description: "Ce hack permet à son utilisateur de créer un court circuit chez l'ennemi. Dégâts : élevé.",
+	Consommable: false,
+}
+
 //craft d'arme et pas d'achat en boutique objet de craft composant de niveau 1 2 3 4 ou 5
