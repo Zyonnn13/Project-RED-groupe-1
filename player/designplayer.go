@@ -80,6 +80,7 @@ func NewDesignplayer() *Designplayer {
 		p.Hair = "Rose"
 	case "8":
 		p.Hair = "Vert"
+
 	}
 
 	//Couleur des yeux
@@ -107,7 +108,6 @@ func NewDesignplayer() *Designplayer {
 	case "6":
 		p.Eyes = "Vert"
 	}
-
 	// Taille
 
 	fmt.Println("\n Choisis ta taille.")

@@ -1,11 +1,11 @@
 package main
 
 import (
+	shop "Project-RED-groupe-1/Shop"
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/monnaie"
 	"Project-RED-groupe-1/player"
-	"Project-RED-groupe-1/shop"
 	"bufio"
 	"fmt"
 	"os"
@@ -13,7 +13,6 @@ import (
 	"time"
 )
 
-// Effet de frappe lente caractère par caractère
 func printlnSlow(text string, delay time.Duration) {
 	for _, c := range text {
 		fmt.Printf("%c", c)
@@ -22,7 +21,6 @@ func printlnSlow(text string, delay time.Duration) {
 	fmt.Println()
 }
 
-// Effet de défilement ligne par ligne
 func printlnLineByLine(text string, delay time.Duration) {
 	lines := strings.Split(text, "\n")
 	for _, line := range lines {
@@ -57,6 +55,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 `
 	yellow := "\033[33m"
 	reset := "\033[0m"
+	green := "\033[32m"
 	printlnLineByLine(yellow+ascii+reset, 100*time.Millisecond)
 
 	printlnSlow("==== Bienvenue dans Cyberpunk 2077 ====", delay)
@@ -65,13 +64,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	p := &player.Player{}
 
 	printlnSlow("1 - Corpo", delay)
-	printlnSlow("   Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne...", delay)
+	printlnSlow(green+"  Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie."+reset, delay)
 
 	printlnSlow("2 - Nomade", delay)
-	printlnSlow("   Tu viens des Badlands, loin de la corruption de la ville...", delay)
+	printlnSlow(green+" Tu viens des Badlands, loin de la corruption de la ville. Ton clan t’a confié une mission : faire passer une cargaison illégale à travers les checkpoints de Night City."+reset, delay)
 
 	printlnSlow("3 - Gosse de rue", delay)
-	printlnSlow("   Tu as grandi dans les ruelles de Heywood...", delay)
+	printlnSlow(green+" Tu as grandi dans les ruelles de Heywood. Tu connais les gangs, les deals, et comment survivre. Mais aujourd’hui, un vieil ami te demande un service dangereux."+reset, delay)
 
 	var choice string
 	for {
@@ -117,14 +116,17 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		histoire.NomadeHistoire()
 	case "3":
 		histoire.GosseHistoire()
+
+		if choice == "1" || choice == "2" || choice == "3" {
+			break
+		}
+		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
+
 	inventory := inventaire.NewInventory()
-
-	inventory.Additem("Maxdoc")
-
+	inventory.Additem("maxdoc")
 	inventory.Showinventory()
 
-	// === MENU INTERACTIF ===
 	for {
 		printlnSlow("\n===== MENU PRINCIPAL =====", delay)
 		printlnSlow("1. Afficher les informations du personnage", delay)
@@ -166,14 +168,67 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Circuit,
 			}
 
-			for i, item := range items {
-				fmt.Printf("\n%d. %s\n", i+1, item.Nom)
-				fmt.Printf("   Prix : %d crédits\n", item.Prix)
-				fmt.Printf("   Description : %s\n", item.Description)
-				if item.Consommable {
-					fmt.Println("   Type : Consommable")
-				} else {
-					fmt.Println("   Type : Hack")
+			for {
+				fmt.Println("\n===== MENU BOUTIQUE =====")
+				for i, item := range items {
+					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
+				}
+				fmt.Println("A. Afficher les détails d’un objet")
+				fmt.Println("B. Acheter un objet")
+				fmt.Println("R. Revenir au menu principal")
+				fmt.Print("Votre choix : ")
+
+				shopChoice, _ := reader.ReadString('\n')
+				shopChoice = strings.TrimSpace(strings.ToUpper(shopChoice))
+
+				switch shopChoice {
+				case "A":
+					fmt.Print("Entrez le numéro de l’objet pour voir les détails : ")
+					numStr, _ := reader.ReadString('\n')
+					numStr = strings.TrimSpace(numStr)
+					index := -1
+					fmt.Sscanf(numStr, "%d", &index)
+					if index >= 1 && index <= len(items) {
+						item := items[index-1]
+						fmt.Printf("\nNom : %s\n", item.Nom)
+						fmt.Printf("Prix : %d eddies\n", item.Prix)
+						fmt.Printf("Description : %s\n", item.Description)
+						if item.Consommable {
+							fmt.Println("Type : Consommable")
+						} else {
+							fmt.Println("Type : Hack")
+						}
+					} else {
+						fmt.Println("Numéro invalide.")
+					}
+					fmt.Println("Appuie sur Entrée pour continuer.")
+					reader.ReadString('\n')
+
+				case "B":
+					fmt.Print("Entrez le numéro de l’objet à acheter : ")
+					numStr, _ := reader.ReadString('\n')
+					numStr = strings.TrimSpace(numStr)
+					index := -1
+					fmt.Sscanf(numStr, "%d", &index)
+					if index >= 1 && index <= len(items) {
+						item := items[index-1]
+						inventory.Additem(item.Nom)
+						fmt.Printf("Vous avez acheté %s !\n", item.Nom)
+					} else {
+						fmt.Println("Numéro invalide.")
+					}
+					fmt.Println("Appuie sur Entrée pour continuer.")
+					reader.ReadString('\n')
+
+				case "R":
+					fmt.Println("Retour au menu principal...")
+
+				default:
+					fmt.Println("Choix invalide. Veuillez réessayer.")
+				}
+
+				if shopChoice == "R" {
+					break
 				}
 			}
 
@@ -210,4 +265,5 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			printlnSlow("Choix invalide. Veuillez réessayer.", delay)
 		}
 	}
+
 }
