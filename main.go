@@ -63,14 +63,14 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	p := &player.Player{}
 
-	printlnSlow("1 - Corpo", delay)
-	printlnSlow("   Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne...", delay)
+	printlnSlow(" - Corpo", delay)
+	printlnSlow("\033[32m1 -\nTu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie.\033[0m", delay)
 
-	printlnSlow("2 - Nomade", delay)
-	printlnSlow("   Tu viens des Badlands, loin de la corruption de la ville...", delay)
+	printlnSlow(" - Nomade ", delay)
+	printlnSlow("\033[32m2 -\nTu viens des Badlands, loin de la corruption de la ville. Ton clan t’a confié une mission : faire passer une cargaison illégale à travers les checkpoints de Night City.\033[0m", delay)
 
-	printlnSlow("3 - Gosse de rue", delay)
-	printlnSlow("   Tu as grandi dans les ruelles de Heywood...", delay)
+	printlnSlow(" - Gosse de rue ", delay)
+	printlnSlow("\033[32m3 -\nTu as grandi dans les ruelles de Heywood. Tu connais les gangs, les deals, et comment survivre. Mais aujourd’hui, un vieil ami te demande un service dangereux.\033[0m", delay)
 
 	var choice string
 	for {
