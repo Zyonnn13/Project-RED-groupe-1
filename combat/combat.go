@@ -16,16 +16,6 @@ type Monster struct {
 	CurrentHP int
 }
 
-func IniAgentCorpo() *Monster {
-	return &Monster{
-		Name:    "Gobelin",
-		MaxHp:   40,
-		Hp:      40,
-		Attaque: 5,
-	}
-
-}
-
 func GoblinPattern(player *player.Designplayer) {
 	goblin := IniAgentCorpo()
 	turn := 1
