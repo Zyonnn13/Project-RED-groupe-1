@@ -118,10 +118,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		histoire.GosseHistoire()
 	}
 
-	inventory := inventaire.NewInventory()
-	inventory.Additem("Maxdoc")
-	inventory.Showinventory()
-
 	// === MENU INTERACTIF ===
 	for {
 		printlnSlow("\n===== MENU PRINCIPAL =====", delay)
@@ -145,6 +141,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		case "2":
 			printlnSlow("\n--- INVENTAIRE ---", delay)
+			inventory := inventaire.NewInventory()
 			inventory.Showinventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
