@@ -24,3 +24,16 @@ var Tourelleauto = Ennemis{"Tourelle Automatique", 10, 10, 200}
 var Sniper = Ennemis{"Sniper", 50, 50, 100}
 var Netrunner = Ennemis{"Netrunner", 50, 50, 100}
 var Adam = Ennemis{"Adam Smasher", 200, 200, 200}
+
+func GetEnemiesForClass(class string) []Ennemis {
+	switch class {
+	case "Corpo":
+		return []Ennemis{Agentcorpo, Agentsecu, Agentarasaka, Adam}
+	case "Nomade":
+		return []Ennemis{Wraiths, Tygerclaws, Chefclaws, Dronelourd}
+	case "Gosse des rues":
+		return []Ennemis{Valentinos, Ncpd, Agentrivaux, Kirk}
+	default:
+		return []Ennemis{Opposant} // fallback si jamais pas de classe
+	}
+}
