@@ -235,7 +235,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 						if eddies.Spend(item.Prix) {
 							inventory.Additem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
-							fmt.Printf("Solde restant : %d eddies\n", eddies.GetBalance())
+							fmt.Printf("Eddies restant : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
 						}
