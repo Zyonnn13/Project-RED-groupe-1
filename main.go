@@ -105,6 +105,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 	eddies := monnaie.NewEddies(100) // Le joueur commence avec 100 crédits
 	joueur.AfficherBarreDeSante()
+	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse !", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
@@ -144,7 +145,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			fmt.Printf("Nom : %s\n", joueur.Nom)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
-			fmt.Printf("Crédits : %d\n", eddies.GetBalance()) //  Ajout ici
+			fmt.Printf("Eddies : %d\n", eddies.GetBalance()) //  Ajout ici
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
@@ -212,8 +213,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					fmt.Sscanf(numStr, "%d", &index)
 					if index >= 1 && index <= len(items) {
 						item := items[index-1]
-						inventory.Additem(item.Nom)
-						fmt.Printf("Vous avez acheté %s !\n", item.Nom)
+						if eddies.Spend(item.Prix) {
+							inventory.Additem(item.Nom)
+							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
+							fmt.Printf("Solde restant : %d eddies\n", eddies.GetBalance())
+						} else {
+							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
+						}
 					} else {
 						fmt.Println("Numéro invalide.")
 					}
@@ -231,29 +237,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					break
 				}
 			}
-
-			// 👇 Ajoute ce bloc juste après l'affichage des objets
-			fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
-			achatInput, _ := reader.ReadString('\n')
-			achatInput = strings.TrimSpace(achatInput)
-
-			if achatInput != "" {
-				index := -1
-				fmt.Sscanf(achatInput, "%d", &index)
-				if index >= 1 && index <= len(items) {
-					item := items[index-1]
-					if eddies.Spend(item.Prix) {
-						printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d crédits.", item.Nom, item.Prix), delay)
-					} else {
-						printlnSlow("Vous n’avez pas assez de crédits.", delay)
-					}
-				} else {
-					printlnSlow("Numéro invalide.", delay)
-				}
-			}
-
-			printlnSlow("\nAppuie sur Entrée pour revenir au menu.", delay)
-			reader.ReadString('\n')
 
 		case "4":
 			printlnSlow("\n--- QUITTER ---", delay)
