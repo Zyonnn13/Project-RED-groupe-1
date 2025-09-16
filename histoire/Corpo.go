@@ -1,6 +1,7 @@
 package histoire
 
 import (
+	"Project-RED-groupe-1/combat"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -27,7 +28,8 @@ func StartCorpo(p *player.Designplayer) {
 	switch choice {
 	case "1":
 		fmt.Println("Jenkins t’accorde sa confiance, mais tu te retrouves sur le terrain face à des opposants.")
-
+		ennemi := combat.IniOpposants()
+		fmt.Printf("%s Un ennemis apparait %d HP %d Attaque", ennemi.Name, ennemi.Hp, ennemi.Attaque)
 	}
 
 }

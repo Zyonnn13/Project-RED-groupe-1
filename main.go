@@ -145,7 +145,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			fmt.Printf("Nom : %s\n", joueur.Nom)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
-			fmt.Printf("Eddies : %d\n", eddies.GetBalance()) //  Ajout ici
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
