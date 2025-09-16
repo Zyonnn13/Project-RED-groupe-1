@@ -11,6 +11,10 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/faiface/beep"
+	"github.com/faiface/beep/mp3"
+	"github.com/faiface/beep/speaker"
 )
 
 func printlnSlow(text string, delay time.Duration) {
@@ -19,6 +23,32 @@ func printlnSlow(text string, delay time.Duration) {
 		time.Sleep(delay)
 	}
 	fmt.Println()
+}
+
+func sound() {
+	// Ouvre le fichier MP3
+	f, err := os.Open("C:/Users/eustm/Desktop/Project-RED-groupe-1/sound/musique.mp3")
+	if err != nil {
+		panic(err)
+	}
+
+	// Décode le fichier audio
+	streamer, format, err := mp3.Decode(f)
+	if err != nil {
+		panic(err)
+	}
+
+	// Crée une boucle infinie
+	looped := beep.Loop(-1, streamer)
+
+	// Initialise le haut-parleur
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+
+	// Joue la musique en boucle
+	speaker.Play(looped)
+
+	// Garde le programme actif (par exemple, ta boucle de jeu)
+	select {}
 }
 
 func printlnLineByLine(text string, delay time.Duration) {
