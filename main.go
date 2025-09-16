@@ -4,6 +4,7 @@ import (
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
+	"Project-RED-groupe-1/shop"
 	"bufio"
 	"fmt"
 	"os"
@@ -105,7 +106,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		fmt.Println("\n===== MENU PRINCIPAL =====")
 		fmt.Println("1. Afficher les informations du personnage")
 		fmt.Println("2. Accéder au contenu de l’inventaire")
-		fmt.Println("3. Quitter")
+		fmt.Println("3. Accéder a la Boutique")
+		fmt.Println("4. Quitter")
 		fmt.Print("Votre choix : ")
 
 		menuChoice, _ := reader.ReadString('\n')
@@ -127,7 +129,36 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			reader.ReadString('\n')
 
 		case "3":
-			fmt.Println("Fermeture du programme...")
+			fmt.Println("\n--- BOUTIQUE ---")
+
+			items := []shop.Item{
+				shop.Maxdoc,
+				shop.Revitalisant,
+				shop.Frag,
+				shop.Flash,
+				shop.Redémarrage,
+				shop.Surchauffe,
+				shop.Circuit,
+			}
+
+			for i, item := range items {
+				fmt.Printf("\n%d. %s\n", i+1, item.Nom)
+				fmt.Printf("   Prix : %d crédits\n", item.Prix)
+				fmt.Printf("   Description : %s\n", item.Description)
+				if item.Consommable {
+					fmt.Println("   Type : Consommable")
+				} else {
+					fmt.Println("   Type : Hack")
+				}
+			}
+
+			fmt.Println("\nAppuie sur Entrée pour revenir au menu.")
+			reader.ReadString('\n')
+
+		case "4":
+			fmt.Println("\n--- QUITTER ---")
+
+			fmt.Println("Appuie sur Entrée pour revenir au menu.")
 			return
 
 		default:
