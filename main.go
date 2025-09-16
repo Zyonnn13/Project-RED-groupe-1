@@ -141,20 +141,70 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Circuit,
 			}
 
-			for i, item := range items {
-				fmt.Printf("\n%d. %s\n", i+1, item.Nom)
-				fmt.Printf("   Prix : %d crédits\n", item.Prix)
-				fmt.Printf("   Description : %s\n", item.Description)
-				if item.Consommable {
-					fmt.Println("   Type : Consommable")
-				} else {
-					fmt.Println("   Type : Hack")
+			for {
+				fmt.Println("\n===== MENU BOUTIQUE =====")
+				for i, item := range items {
+					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
+				}
+				fmt.Println("A. Afficher les détails d’un objet")
+				fmt.Println("B. Acheter un objet")
+				fmt.Println("R. Revenir au menu principal")
+				fmt.Print("Votre choix : ")
+
+				shopChoice, _ := reader.ReadString('\n')
+				shopChoice = strings.TrimSpace(strings.ToUpper(shopChoice))
+
+				switch shopChoice {
+				case "A":
+					fmt.Print("Entrez le numéro de l’objet pour voir les détails : ")
+					numStr, _ := reader.ReadString('\n')
+					numStr = strings.TrimSpace(numStr)
+					index := -1
+					fmt.Sscanf(numStr, "%d", &index)
+					if index >= 1 && index <= len(items) {
+						item := items[index-1]
+						fmt.Printf("\nNom : %s\n", item.Nom)
+						fmt.Printf("Prix : %d eddies\n", item.Prix)
+						fmt.Printf("Description : %s\n", item.Description)
+						if item.Consommable {
+							fmt.Println("Type : Consommable")
+						} else {
+							fmt.Println("Type : Hack")
+						}
+					} else {
+						fmt.Println("Numéro invalide.")
+					}
+					fmt.Println("Appuie sur Entrée pour continuer.")
+					reader.ReadString('\n')
+
+				case "B":
+					fmt.Print("Entrez le numéro de l’objet à acheter : ")
+					numStr, _ := reader.ReadString('\n')
+					numStr = strings.TrimSpace(numStr)
+					index := -1
+					fmt.Sscanf(numStr, "%d", &index)
+					if index >= 1 && index <= len(items) {
+						item := items[index-1]
+						inventory.Additem(item.Nom)
+						fmt.Printf("Vous avez acheté %s !\n", item.Nom)
+					} else {
+						fmt.Println("Numéro invalide.")
+					}
+					fmt.Println("Appuie sur Entrée pour continuer.")
+					reader.ReadString('\n')
+
+				case "R":
+					fmt.Println("Retour au menu principal...")
+					break
+
+				default:
+					fmt.Println("Choix invalide. Veuillez réessayer.")
+				}
+
+				if shopChoice == "R" {
+					break
 				}
 			}
-
-			fmt.Println("\nAppuie sur Entrée pour revenir au menu.")
-			reader.ReadString('\n')
-
 		case "4":
 			fmt.Println("\n--- QUITTER ---")
 
