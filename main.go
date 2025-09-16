@@ -139,10 +139,14 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		switch menuChoice {
 		case "1":
-			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
-			fmt.Printf("Nom : %s\n", joueur.Nom)
-			fmt.Printf("Classe : %s\n", p.Class)
-			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
+			printlnSlow("\n╔════════════════════════════════════════════════════════════════════╗", delay)
+			printlnSlow("║                        --- INFOS PERSONNAGE ---                    ║", delay)
+			fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
+			fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n", "Nom", "Class", "Sante", "SanteMax")
+			fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
+			fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n",
+				joueur.Nom, p.Class, joueur.Sante, joueur.SanteMax)
+			fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
