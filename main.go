@@ -25,7 +25,7 @@ func printlnSlow(text string, delay time.Duration) {
 	fmt.Println()
 }
 
-func main() {
+func sound() {
 	// Ouvre le fichier MP3
 	f, err := os.Open("C:/Users/eustm/Desktop/Project-RED-groupe-1/sound/musique.mp3")
 	if err != nil {
