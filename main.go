@@ -173,6 +173,26 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
+				// 👇 Ajoute ce bloc juste après l'affichage des objets
+				fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
+				achatInput, _ := reader.ReadString('\n')
+				achatInput = strings.TrimSpace(achatInput)
+
+				if achatInput != "" {
+					index := -1
+					fmt.Sscanf(achatInput, "%d", &index)
+					if index >= 1 && index <= len(items) {
+						item := items[index-1]
+						if eddies.Spend(item.Prix) {
+							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d crédits.", item.Nom, item.Prix), delay)
+						} else {
+							printlnSlow("Vous n’avez pas assez de crédits.", delay)
+						}
+					} else {
+						printlnSlow("Numéro invalide.", delay)
+					}
+				}
+
 				fmt.Println("A. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
 				fmt.Println("R. Revenir au menu principal")
@@ -229,26 +249,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				if shopChoice == "R" {
 					break
-				}
-			}
-
-			// 👇 Ajoute ce bloc juste après l'affichage des objets
-			fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
-			achatInput, _ := reader.ReadString('\n')
-			achatInput = strings.TrimSpace(achatInput)
-
-			if achatInput != "" {
-				index := -1
-				fmt.Sscanf(achatInput, "%d", &index)
-				if index >= 1 && index <= len(items) {
-					item := items[index-1]
-					if eddies.Spend(item.Prix) {
-						printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d crédits.", item.Nom, item.Prix), delay)
-					} else {
-						printlnSlow("Vous n’avez pas assez de crédits.", delay)
-					}
-				} else {
-					printlnSlow("Numéro invalide.", delay)
 				}
 			}
 
