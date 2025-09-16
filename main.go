@@ -4,7 +4,7 @@ import (
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
-	"Project-RED-groupe-1/shop"
+	"Project-RED-groupe-1/Shop"
 	"bufio"
 	"fmt"
 	"os"
@@ -119,7 +119,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 
 	inventory := inventaire.NewInventory()
-	inventory.Additem("Maxdoc")
+	inventory.Additem("maxdoc")
 	inventory.Showinventory()
 
 	// === MENU INTERACTIF ===
@@ -216,7 +216,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
-					break
 
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
