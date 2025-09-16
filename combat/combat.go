@@ -8,14 +8,6 @@ import (
 	"strings"
 )
 
-type Monster struct {
-	Name      string
-	MaxHp     int
-	Hp        int
-	Attaque   int
-	CurrentHP int
-}
-
 func GoblinPattern(player *player.Designplayer) {
 	goblin := IniAgentCorpo()
 	turn := 1
@@ -46,7 +38,7 @@ func GoblinPattern(player *player.Designplayer) {
 	}
 }
 
-func CharacterTurn(p *player.Designplayer, m *Monster) {
+func CharacterTurn(p *player.Designplayer, m *NCPD) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("\n🎮 Ton tour de jeu !")
@@ -61,20 +53,19 @@ func CharacterTurn(p *player.Designplayer, m *Monster) {
 	case "1":
 		// Attaque basique
 		damage := 5
-		m.CurrentHP -= damage
-		if m.CurrentHP < 0 {
-			m.CurrentHP = 0
+		m.Hp -= damage
+		if m.Hp < 0 {
+			m.Hp = 0
 		}
 
 		fmt.Printf("\n %s utilise Attaque basique et inflige %d dégâts à %s !\n", p.Name, damage, m.Name)
-		fmt.Printf("PV de %s : %d/%d\n", m.Name, m.CurrentHP, m.MaxHp)
+		fmt.Printf("PV de %s : %d/%d\n", m.Name, m.Hp, m.MaxHp)
 
-		if m.CurrentHP == 0 {
+		if m.Hp == 0 {
 			fmt.Printf("✅ %s est vaincu !\n", m.Name)
 			return
 		}
 
-		// Tour du monstre
 		fmt.Println("\n Tour du monstre !")
 		p.HP -= m.Attaque
 		if p.HP < 0 {
