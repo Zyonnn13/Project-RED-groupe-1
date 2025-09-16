@@ -4,6 +4,7 @@ import (
 	shop "Project-RED-groupe-1/Shop"
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
+	"Project-RED-groupe-1/monnaie"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -102,8 +103,9 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		Sante:    100,
 		SanteMax: 100,
 	}
-
+	eddies := monnaie.NewEddies(100) // Le joueur commence avec 100 crédits
 	joueur.AfficherBarreDeSante()
+	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse !", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
@@ -139,14 +141,10 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		switch menuChoice {
 		case "1":
-			printlnSlow("\n╔════════════════════════════════════════════════════════════════════╗", delay)
-			printlnSlow("║                        --- INFOS PERSONNAGE ---                    ║", delay)
-			fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
-			fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n", "Nom", "Class", "Sante", "SanteMax")
-			fmt.Println("╠════════════════════════════════════════════════════════════════════╣")
-			fmt.Printf("║ %-15s │ %-15s │ %-15s │ %-15s \n",
-				joueur.Nom, p.Class, joueur.Sante, joueur.SanteMax)
-			fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
+			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
+			fmt.Printf("Nom : %s\n", joueur.Nom)
+			fmt.Printf("Classe : %s\n", p.Class)
+			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
@@ -214,8 +212,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					fmt.Sscanf(numStr, "%d", &index)
 					if index >= 1 && index <= len(items) {
 						item := items[index-1]
-						inventory.Additem(item.Nom)
-						fmt.Printf("Vous avez acheté %s !\n", item.Nom)
+						if eddies.Spend(item.Prix) {
+							inventory.Additem(item.Nom)
+							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
+							fmt.Printf("Solde restant : %d eddies\n", eddies.GetBalance())
+						} else {
+							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
+						}
 					} else {
 						fmt.Println("Numéro invalide.")
 					}
