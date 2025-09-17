@@ -39,7 +39,11 @@ func (inv *Inventory) UseItem(item string, p *player.Player) bool {
 				if p.HP > p.MaxHP {
 					p.HP = p.MaxHP
 				}
+
 				fmt.Printf("🧪 %s utilise Potion de soin (+%d HP)\n", p.Name, soin)
+
+				fmt.Println("🧪 Vous utilisez un Maxdoc M.K 1")
+				fmt.Printf("❤️ PV de %s : %d / %d\n", p.Name, p.HP, p.MaxHP)
 
 			case "Boost d'attaque":
 				p.Attack += 5

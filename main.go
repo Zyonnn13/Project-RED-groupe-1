@@ -28,29 +28,31 @@ func printlnSlow(text string, delay time.Duration) {
 }
 
 func sound() {
-	// Ouvre le fichier MP3
-	f, err := os.Open("C:/Users/eustm/Desktop/Project-RED-groupe-1/sound/musique.mp3")
-	if err != nil {
-		panic(err)
+	for {
+		f, err := os.Open("sound/musique.mp3")
+		if err != nil {
+			fmt.Println("Erreur ouverture fichier audio :", err)
+			return
+		}
+		streamer, format, err := mp3.Decode(f)
+		if err != nil {
+			fmt.Println("Erreur décodage audio :", err)
+			f.Close()
+			return
+		}
+		speaker.Init(format.SampleRate, format.SampleRate.N(time.Millisecond*50))
+		done := make(chan bool)
+		speaker.Play(beep.Seq(streamer, beep.Callback(func() {
+			streamer.Close()
+			f.Close()
+			done <- true
+		})))
+		<-done
 	}
+}
 
-	// Décode le fichier audio
-	streamer, format, err := mp3.Decode(f)
-	if err != nil {
-		panic(err)
-	}
-
-	// Crée une boucle infinie
-	looped := beep.Loop(-1, streamer)
-
-	// Initialise le haut-parleur
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-
-	// Joue la musique en boucle
-	speaker.Play(looped)
-
-	// Garde le programme actif (par exemple, ta boucle de jeu)
-	select {}
+func soundplay() {
+	go sound()
 }
 
 func printlnLineByLine(text string, delay time.Duration) {
@@ -64,7 +66,7 @@ func printlnLineByLine(text string, delay time.Duration) {
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 	delay := 20 * time.Millisecond
-
+	soundplay()
 	ascii := `
 ________/\\\\\\\\\________________/\\\___________________________________________________________________________________________________________________________                       
  _____/\\\////////________________\/\\\________________________________________________________________________________/\\\_______________________________________                      
@@ -181,7 +183,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		switch menuChoice {
 		case "1":
 			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
-			fmt.Printf("Nom : %s\n", character.Name)
+			fmt.Printf("Nom : %s\n", joueur.Nom)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
 			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
@@ -189,31 +191,29 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			reader.ReadString('\n')
 
 		case "2":
-			printlnSlow("\n--- INVENTAIRE ---", delay)
+			printlnSlow("\n=== INVENTAIRE ===", delay)
 			inventory := inventaire.NewInventory()
 			inventory.ShowInventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
 		case "3":
-			printlnSlow("\n--- BOUTIQUE ---", delay)
-
 			items := []shop.Item{
 				shop.Maxdoc,
 				shop.Revitalisant,
 				shop.Frag,
 				shop.Flash,
-				shop.Redémarrage,
+				shop.Redemarrage,
 				shop.Surchauffe,
 				shop.Circuit,
 			}
 
 			for {
-				fmt.Println("\n===== MENU BOUTIQUE =====")
+				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
-
+				// 👇 Ajoute ce bloc juste après l'affichage des objets
 				fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
 				achatInput, _ := reader.ReadString('\n')
 				achatInput = strings.TrimSpace(achatInput)
@@ -275,7 +275,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 						if eddies.Spend(item.Prix) {
 							inventory.AddItem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
-							fmt.Printf("Eddies restant : %d eddies\n", eddies.GetBalance())
+							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
 						}
@@ -287,16 +287,17 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
+					break
 
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
 				}
-
 				if shopChoice == "R" {
 					break
 				}
 			}
 
+			// 👇 Ajoute ce bloc juste après l'affichage des objets
 			fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
 			achatInput, _ := reader.ReadString('\n')
 			achatInput = strings.TrimSpace(achatInput)
@@ -320,7 +321,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			reader.ReadString('\n')
 
 		case "4":
-			printlnSlow("\n--- QUITTER ---", delay)
+			printlnSlow("\n=== QUITTER ===", delay)
 			printlnSlow("Appuie sur Entrée pour quitter le jeu.", delay)
 			reader.ReadString('\n')
 			return
