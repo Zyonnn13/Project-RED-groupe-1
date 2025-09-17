@@ -26,29 +26,31 @@ func printlnSlow(text string, delay time.Duration) {
 }
 
 func sound() {
-	// Ouvre le fichier MP3
-	f, err := os.Open("C:/Users/eustm/Desktop/Project-RED-groupe-1/sound/musique.mp3")
-	if err != nil {
-		panic(err)
+	for {
+		f, err := os.Open("sound/musique.mp3")
+		if err != nil {
+			fmt.Println("Erreur ouverture fichier audio :", err)
+			return
+		}
+		streamer, format, err := mp3.Decode(f)
+		if err != nil {
+			fmt.Println("Erreur décodage audio :", err)
+			f.Close()
+			return
+		}
+		speaker.Init(format.SampleRate, format.SampleRate.N(time.Millisecond*50))
+		done := make(chan bool)
+		speaker.Play(beep.Seq(streamer, beep.Callback(func() {
+			streamer.Close()
+			f.Close()
+			done <- true
+		})))
+		<-done
 	}
+}
 
-	// Décode le fichier audio
-	streamer, format, err := mp3.Decode(f)
-	if err != nil {
-		panic(err)
-	}
-
-	// Crée une boucle infinie
-	looped := beep.Loop(-1, streamer)
-
-	// Initialise le haut-parleur
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-
-	// Joue la musique en boucle
-	speaker.Play(looped)
-
-	// Garde le programme actif (par exemple, ta boucle de jeu)
-	select {}
+func soundplay() {
+	go sound()
 }
 
 func printlnLineByLine(text string, delay time.Duration) {
