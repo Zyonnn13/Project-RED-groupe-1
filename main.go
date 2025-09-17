@@ -183,7 +183,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		switch menuChoice {
 		case "1":
 			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
-			fmt.Printf("Nom : %s\n", joueur.Nom)
+			fmt.Printf("Nom : %s\n", p.Name)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
 			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
@@ -287,7 +287,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
-					break
 
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
