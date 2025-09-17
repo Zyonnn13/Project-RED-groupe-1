@@ -176,7 +176,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		switch menuChoice {
 		case "1":
-			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
+			printlnSlow("\n=== INFOS PERSONNAGE ===", delay)
 			fmt.Printf("Nom : %s\n", joueur.Nom)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
@@ -184,15 +184,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			reader.ReadString('\n')
 
 		case "2":
-			printlnSlow("\n--- INVENTAIRE ---", delay)
+			printlnSlow("\n=== INVENTAIRE ===", delay)
 			inventory := inventaire.NewInventory()
 			inventory.Showinventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
 		case "3":
-			printlnSlow("\n--- BOUTIQUE ---", delay)
-
 			items := []shop.Item{
 				shop.Maxdoc,
 				shop.Revitalisant,
@@ -204,7 +202,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			}
 
 			for {
-				fmt.Println("\n===== MENU BOUTIQUE =====")
+				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
@@ -263,13 +261,17 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
-					return
+					break
+
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
 				}
+				if shopChoice == "R" {
+					break
+				}
 			}
 		case "4":
-			printlnSlow("\n--- QUITTER ---", delay)
+			printlnSlow("\n=== QUITTER ===", delay)
 			printlnSlow("Appuie sur Entrée pour quitter le jeu.", delay)
 			reader.ReadString('\n')
 			return
