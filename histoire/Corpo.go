@@ -2,6 +2,7 @@ package histoire
 
 import (
 	"Project-RED-groupe-1/combat"
+	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -15,7 +16,7 @@ func CorpoHistoire() {
 	fmt.Println("Ton supérieur, Jenkins, t’explique qu’il faut discréditer un rival politique. Tu sais que ce genre de mission ne se termine jamais proprement.")
 }
 
-func StartCorpo(p *player.Designplayer) {
+func StartCorpo(p *player.Player) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("Que fais-tu ?")
@@ -30,21 +31,18 @@ func StartCorpo(p *player.Designplayer) {
 	case "1":
 		fmt.Println("Jenkins t’accorde sa confiance, mais tu te retrouves sur le terrain face à des opposants.")
 		ennemi := combat.Ncpd
-		fmt.Printf("⚔️ %s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
+		fmt.Printf("%s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
 
-		// 👉 ICI tu déclenches le combat
-		combat.LancerCombat(p, ennemi)
+		combat.LancerCombat(p, combat.Ncpd, &inventaire.Inventory{})
 
 	case "2":
 		fmt.Println("Grâce à tes contacts, ton rival est neutralisé avant même d’avoir commencé. Tu évites un affrontement direct.")
-		// Ici pas de combat → tu continues l’histoire
 
 	case "3":
 		fmt.Println("Refuser un ordre direct de Jenkins est dangereux... Tu sens que cela ne va pas bien se terminer.")
 		ennemi := combat.Agentcorpo
-		fmt.Printf("⚔️ %s est envoyé pour te punir ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
+		fmt.Printf("%s est envoyé pour te punir ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
 
-		// 👉 Combat déclenché ici aussi
-		combat.LancerCombat(p, ennemi)
+		combat.LancerCombat(p, combat.Agentcorpo, &inventaire.Inventory{})
 	}
 }

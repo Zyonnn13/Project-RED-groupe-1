@@ -23,9 +23,9 @@ func (a Arme) Attaque() int {
 
 var Pistolet1 = Arme{
 	Nom:        "Pistolet",
-	Degats:     10,
-	Precision:  0.40,
-	CritChance: 0.0,
+	Degats:     45,
+	Precision:  0.70,
+	CritChance: 0.20,
 	Niveau:     1,
 }
 

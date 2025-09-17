@@ -1,50 +1,94 @@
 package combat
 
 import (
+	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
+	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
 )
 
-func LancerCombat(joueur *player.Designplayer, ennemi Ennemis) {
+func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Inventory) {
 	rand.Seed(time.Now().UnixNano())
+	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Printf("Un combat commence contre %s !\n", ennemi.Name)
+	fmt.Printf("\n Un combat commence contre %s !\n", ennemi.Name)
 
-	for joueur.HP > 0 && ennemi.Hp > 0 {
+	for joueur.HP > 0 && ennemi.HP > 0 {
+		afficherStats(joueur, ennemi)
+
 		// Tour du joueur
-		damage := calcDamage(joueur.Attack)
-		ennemi.Hp -= damage
-		if ennemi.Hp < 0 {
-			ennemi.Hp = 0
-		}
-		fmt.Printf("%s attaque et inflige %d dégâts. HP ennemi : %d/%d\n",
-			joueur.Name, damage, ennemi.Hp, ennemi.MaxHp)
+		fmt.Println("\nQue veux-tu faire ?")
+		fmt.Println("1 - Attaquer avec votre armes")
+		fmt.Println("2 - Inventaire")
+		fmt.Println("3 - Fuir")
+		fmt.Print("Choix : ")
 
-		if ennemi.Hp <= 0 {
-			fmt.Printf("%s est vaincu !\n", ennemi.Name)
+		choice, _ := reader.ReadString('\n')
+		choice = strings.TrimSpace(choice)
+
+		switch choice {
+		case "1":
+			// Attaque
+			degat := joueur.Arme.Attaque()
+			ennemi.HP -= degat
+			if ennemi.HP < 0 {
+				ennemi.HP = 0
+			}
+			fmt.Printf("Tu attaques %s avec ton %s et infliges %d dégâts !\n", ennemi.Name, joueur.Arme.Nom, degat)
+
+		case "2":
+			// Inventaire
+			inv.ShowInventory()
+			fmt.Print("Quel objet veux-tu utiliser ? ")
+			itemChoice, _ := reader.ReadString('\n')
+			itemChoice = strings.TrimSpace(itemChoice)
+			success := inv.UseItem(itemChoice, joueur)
+			if success {
+				continue
+			}
+
+		case "3":
+			fmt.Println("Tu t’enfuis du combat !")
+			return
+
+		default:
+			fmt.Println("Choix invalide, ton tour est perdu !")
+		}
+
+		if ennemi.HP <= 0 {
+			fmt.Printf("🎉 %s est vaincu !\n", ennemi.Name)
 			break
 		}
 
-		// Tour de l'ennemi
-		damage = calcDamage(ennemi.Attaque)
-		joueur.HP -= damage
+		fmt.Printf("\n--- Tour de %s ---\n", ennemi.Name)
+		degat := calcDamage(ennemi.Attack)
+		joueur.HP -= degat
 		if joueur.HP < 0 {
 			joueur.HP = 0
 		}
-		fmt.Printf("%s attaque et inflige %d dégâts. HP joueur : %d/%d\n",
-			ennemi.Name, damage, joueur.HP, joueur.MaxHP)
+		fmt.Printf("%s attaque et inflige %d dégâts !\n", ennemi.Name, degat)
 
 		if joueur.HP <= 0 {
-			fmt.Printf("Vous avez été vaincu par %s...\n", ennemi.Name)
+			fmt.Println("💀 Tu as été vaincu...")
 			break
 		}
 	}
+
+	fmt.Println("Fin du combat.")
+}
+
+func afficherStats(joueur *player.Player, ennemi Ennemis) {
+	fmt.Printf("\n--- Statut ---\n")
+	fmt.Printf("❤️ %s : %d/%d HP\n", joueur.Name, joueur.HP, joueur.MaxHP)
+	fmt.Printf("💀 %s : %d/%d HP\n", ennemi.Name, ennemi.HP, ennemi.MaxHP)
 }
 
 func calcDamage(base int) int {
-	variance := base / 10
+	variance := base / 5
 	if variance < 1 {
 		variance = 1
 	}

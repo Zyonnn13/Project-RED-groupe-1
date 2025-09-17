@@ -1,10 +1,10 @@
 package combat
 
 type Ennemis struct {
-	Name    string
-	MaxHp   int
-	Hp      int
-	Attaque int
+	Name   string
+	MaxHP  int
+	HP     int
+	Attack int
 }
 
 var Opposant = Ennemis{"Opposant", 100, 100, 50}

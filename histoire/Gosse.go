@@ -2,6 +2,7 @@ package histoire
 
 import (
 	"Project-RED-groupe-1/combat"
+	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -16,7 +17,7 @@ func GosseHistoire() {
 	fmt.Println("Tu décides d’aller voir Kirk dans une arrière-salle d’un bar miteux...")
 }
 
-func StartGosse(p *player.Designplayer) {
+func StartGosse(p *player.Player) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("\nComment veux-tu gérer Kirk et sa dette ?")
@@ -31,14 +32,13 @@ func StartGosse(p *player.Designplayer) {
 	switch choice {
 	case "1":
 		fmt.Println("\nTu rencontres Kirk dans une arrière-salle. Les Valentinos te fixent froidement.")
-		// On simule une tentative de persuasion
 		if persuasionReussie() {
 			fmt.Println("✅ Ta persuasion réussit ! Pas de combat, Kirk accepte de réduire la dette.")
 		} else {
 			fmt.Println("❌ Échec de persuasion... Les Valentinos passent à l’attaque !")
 			ennemi := combat.Valentinos
-			fmt.Printf("⚔️ %s surgissent ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
-			combat.LancerCombat(p, ennemi)
+			fmt.Printf("⚔️ %s surgissent ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+			combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 		}
 
 	case "2":
@@ -53,12 +53,12 @@ func StartGosse(p *player.Designplayer) {
 		ennemi3 := combat.Valentinos
 		fmt.Println("⚔️ Kirk et ses deux sbires sortent leurs armes !")
 		// Trois combats à la suite simulant un affrontement de groupe
-		combat.LancerCombat(p, ennemi1)
+		combat.LancerCombat(p, ennemi1, &inventaire.Inventory{})
 		if p.HP > 0 {
-			combat.LancerCombat(p, ennemi2)
+			combat.LancerCombat(p, ennemi2, &inventaire.Inventory{})
 		}
 		if p.HP > 0 {
-			combat.LancerCombat(p, ennemi3)
+			combat.LancerCombat(p, ennemi3, &inventaire.Inventory{})
 		}
 
 	case "4":

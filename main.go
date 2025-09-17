@@ -1,7 +1,9 @@
 package main
 
 import (
+	armes "Project-RED-groupe-1/Armes"
 	shop "Project-RED-groupe-1/Shop"
+	"Project-RED-groupe-1/combat"
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/monnaie"
@@ -89,6 +91,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	printlnLineByLine(yellow+ascii+reset, 100*time.Millisecond)
 
 	printlnSlow("==== Bienvenue dans Cyberpunk 2077 ====", delay)
+
 	printlnSlow("Choisis ta classe au sein de Night City", delay)
 
 	p := &player.Player{}
@@ -117,7 +120,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	p.ChooseClass(choice)
 	printlnSlow(fmt.Sprintf("\nTu es un %s !", p.Class), delay)
 
-	character := player.NewDesignplayer()
+	character := player.NewPlayer()
+	character.Arme = armes.Pistolet1
 
 	printlnSlow("\n╔════════════════════════════════════════════════════════════════════╗", 5*time.Millisecond)
 	printlnSlow("║                        Ton personnage final                        ║", 5*time.Millisecond)
@@ -128,14 +132,12 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		character.Name, character.Hair, character.Eyes, character.Height)
 	fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
 
-	joueur := player.Joueur{
-		Nom:      character.Name,
-		Sante:    100,
-		SanteMax: 100,
-	}
-	eddies := monnaie.NewEddies(100) // Le joueur commence avec 100 crédits
-	joueur.AfficherBarreDeSante()
-	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse !", eddies.GetBalance()), delay)
+	eddies := monnaie.NewEddies(100)
+	character.HP = 100
+	character.MaxHP = 100
+	character.AfficherBarreDeSante()
+
+	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme de débarquement avec 40 pourcent de précision. Bonne chance", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
@@ -144,12 +146,16 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	case "1":
 		histoire.CorpoHistoire()
 		histoire.StartCorpo(character)
+		combat.LancerCombat(p, combat.Agentcorpo, &inventaire.Inventory{})
+
 	case "2":
 		histoire.NomadeHistoire()
 		histoire.StartNomade(character)
+		combat.LancerCombat(p, combat.Ncpd, &inventaire.Inventory{})
 	case "3":
 		histoire.GosseHistoire()
 		histoire.StartGosse(character)
+		combat.LancerCombat(p, combat.Adam, &inventaire.Inventory{})
 
 		if choice == "1" || choice == "2" || choice == "3" {
 			break
@@ -158,8 +164,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 
 	inventory := inventaire.NewInventory()
-	inventory.Additem("maxdoc")
-	inventory.Showinventory()
+	inventory.AddItem("maxdoc")
+	inventory.ShowInventory()
 
 	for {
 		printlnSlow("\n===== MENU PRINCIPAL =====", delay)
@@ -175,16 +181,17 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		switch menuChoice {
 		case "1":
 			printlnSlow("\n--- INFOS PERSONNAGE ---", delay)
-			fmt.Printf("Nom : %s\n", joueur.Nom)
+			fmt.Printf("Nom : %s\n", character.Name)
 			fmt.Printf("Classe : %s\n", p.Class)
-			fmt.Printf("Santé : %d/%d\n", joueur.Sante, joueur.SanteMax)
+			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
+			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
 		case "2":
 			printlnSlow("\n--- INVENTAIRE ---", delay)
 			inventory := inventaire.NewInventory()
-			inventory.Showinventory()
+			inventory.ShowInventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
@@ -206,7 +213,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
-				// 👇 Ajoute ce bloc juste après l'affichage des objets
+
 				fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
 				achatInput, _ := reader.ReadString('\n')
 				achatInput = strings.TrimSpace(achatInput)
@@ -266,7 +273,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					if index >= 1 && index <= len(items) {
 						item := items[index-1]
 						if eddies.Spend(item.Prix) {
-							inventory.Additem(item.Nom)
+							inventory.AddItem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
 							fmt.Printf("Eddies restant : %d eddies\n", eddies.GetBalance())
 						} else {
@@ -290,7 +297,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				}
 			}
 
-			// 👇 Ajoute ce bloc juste après l'affichage des objets
 			fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
 			achatInput, _ := reader.ReadString('\n')
 			achatInput = strings.TrimSpace(achatInput)

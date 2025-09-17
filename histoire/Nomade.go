@@ -2,6 +2,7 @@ package histoire
 
 import (
 	"Project-RED-groupe-1/combat"
+	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/player"
 	"bufio"
 	"fmt"
@@ -17,7 +18,7 @@ func NomadeHistoire() {
 }
 
 // Suite de l'histoire avec les choix
-func StartNomade(p *player.Designplayer) {
+func StartNomade(p *player.Player) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("\nQue fais-tu ?")
@@ -30,28 +31,28 @@ func StartNomade(p *player.Designplayer) {
 
 	switch choice {
 	case "1":
-		fmt.Println("\n💥 Tu charges les Wraiths, arme en main !")
+		fmt.Println("\nTu charges les Wraiths, arme en main !")
 		ennemi := combat.Wraiths
-		fmt.Printf("⚔️ %s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
-		combat.LancerCombat(p, ennemi)
+		fmt.Printf("%s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	case "2":
-		fmt.Println("\n🚗 Grâce à ta conduite, tu fais fuir une partie du gang… mais certains restent.")
+		fmt.Println("\nGrâce à ta conduite, tu fais fuir une partie du gang… mais certains restent.")
 		ennemi := combat.Tygerclaws
-		fmt.Printf("⚔️ %s surgit ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
-		combat.LancerCombat(p, ennemi)
+		fmt.Printf("%s surgit ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	case "3":
-		fmt.Println("\n🤝 Tu lèves les mains et proposes un deal…")
-		// Tu peux imaginer un mini test de persuasion plus tard
+		fmt.Println("\nTu lèves les mains et proposes un deal…")
+
 		fmt.Println("Mais les Wraiths refusent et ouvrent le feu !")
 		ennemi := combat.Wraiths
-		fmt.Printf("⚔️ %s attaque ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.Hp, ennemi.Attaque)
-		combat.LancerCombat(p, ennemi)
+		fmt.Printf("%s attaque ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	default:
 		fmt.Println("Choix invalide, les Wraiths attaquent par surprise !")
 		ennemi := combat.Wraiths
-		combat.LancerCombat(p, ennemi)
+		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 	}
 }
