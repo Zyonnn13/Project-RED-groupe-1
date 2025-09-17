@@ -254,7 +254,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					if index >= 1 && index <= len(items) {
 						item := items[index-1]
 						if eddies.Spend(item.Prix) {
-							inventory.Additem(item.Nom)
+							inventory.AddItem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
 							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
@@ -268,13 +268,12 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
-					break // <-- sort seulement de la boucle boutique
+					break
 
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
 				}
 
-				// Si on a choisi "R", on sort de la boucle boutique
 				if shopChoice == "R" {
 					break
 				}
