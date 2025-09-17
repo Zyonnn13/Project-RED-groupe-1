@@ -198,7 +198,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Revitalisant,
 				shop.Frag,
 				shop.Flash,
-				shop.Redémarrage,
+				shop.Redemarrage,
 				shop.Surchauffe,
 				shop.Circuit,
 			}
@@ -208,27 +208,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
-				// 👇 Ajoute ce bloc juste après l'affichage des objets
-				fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
-				achatInput, _ := reader.ReadString('\n')
-				achatInput = strings.TrimSpace(achatInput)
 
-				if achatInput != "" {
-					index := -1
-					fmt.Sscanf(achatInput, "%d", &index)
-					if index >= 1 && index <= len(items) {
-						item := items[index-1]
-						if eddies.Spend(item.Prix) {
-							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d crédits.", item.Nom, item.Prix), delay)
-						} else {
-							printlnSlow("Vous n’avez pas assez de crédits.", delay)
-						}
-					} else {
-						printlnSlow("Numéro invalide.", delay)
-					}
-				}
-
-				fmt.Println("A. Afficher les détails d’un objet")
+				fmt.Println("\nA. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
 				fmt.Println("R. Revenir au menu principal")
 				fmt.Print("Votre choix : ")
@@ -270,7 +251,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 						if eddies.Spend(item.Prix) {
 							inventory.Additem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
-							fmt.Printf("Eddies restant : %d eddies\n", eddies.GetBalance())
+							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
 						}
@@ -282,39 +263,11 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 				case "R":
 					fmt.Println("Retour au menu principal...")
-
+					return
 				default:
 					fmt.Println("Choix invalide. Veuillez réessayer.")
 				}
-
-				if shopChoice == "R" {
-					break
-				}
 			}
-
-			// 👇 Ajoute ce bloc juste après l'affichage des objets
-			fmt.Print("\nEntrez le numéro de l’objet à acheter (ou appuyez sur Entrée pour annuler) : ")
-			achatInput, _ := reader.ReadString('\n')
-			achatInput = strings.TrimSpace(achatInput)
-
-			if achatInput != "" {
-				index := -1
-				fmt.Sscanf(achatInput, "%d", &index)
-				if index >= 1 && index <= len(items) {
-					item := items[index-1]
-					if eddies.Spend(item.Prix) {
-						printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d crédits.", item.Nom, item.Prix), delay)
-					} else {
-						printlnSlow("Vous n’avez pas assez de crédits.", delay)
-					}
-				} else {
-					printlnSlow("Numéro invalide.", delay)
-				}
-			}
-
-			printlnSlow("\nAppuie sur Entrée pour revenir au menu.", delay)
-			reader.ReadString('\n')
-
 		case "4":
 			printlnSlow("\n--- QUITTER ---", delay)
 			printlnSlow("Appuie sur Entrée pour quitter le jeu.", delay)

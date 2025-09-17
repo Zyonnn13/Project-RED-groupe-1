@@ -10,49 +10,49 @@ type Item struct {
 var Maxdoc = Item{
 	Nom:         "Maxdoc M.K 1",
 	Prix:        50,
-	Description: "Le MaxDoc est un Inhalateur fabriqué par la Trauma Team. Il permet à l'utilisateur de restaurer 50 PV lorsuq'il est utilisé.",
+	Description: "Le MaxDoc est un inhalateur fabriqué par la Trauma Team. Il permet à l'utilisateur de restaurer 50 PV lorsqu'il est utilisé.",
 	Consommable: true,
 }
 
 var Revitalisant = Item{
 	Nom:         "Revitalisant M.K 1",
 	Prix:        60,
-	Description: "Le revitalisant est une injection permetant à son utilisateur de restaurer instantanément 30 PV, puis de restaurer 30 PV de nouveau au tour suivant",
+	Description: "Le revitalisant est une injection permettant de restaurer instantanément 30 PV, puis de restaurer 30 PV de nouveau au tour suivant.",
 	Consommable: true,
 }
 
 var Frag = Item{
-	Nom:         "La grenade à fragmentation F-GX",
+	Nom:         "Grenade à fragmentation F-GX",
 	Prix:        120,
-	Description: "Cette grenade permet à son utilisateur d'infliger des dégâts à tous les ennemis. Dégâts : modérés",
+	Description: "Cette grenade inflige des dégâts modérés à tous les ennemis.",
 	Consommable: true,
 }
 
 var Flash = Item{
 	Nom:         "Grenade aveuglante X-22",
 	Prix:        150,
-	Description: "Cette grenade permet à son utilisateur d'aveugler tous les ennemis ce qui les empêche d'attaquer au tour suivant. Les ennemis sont capable d'annnuler cet effet et il est inefficace contre le boss final.",
+	Description: "Aveugle tous les ennemis, les empêchant d'attaquer au tour suivant. Inefficace contre le boss final.",
 	Consommable: true,
 }
 
-var Redémarrage = Item{
+var Redemarrage = Item{
 	Nom:         "Redémarrage optique",
 	Prix:        500,
-	Description: "Ce hack permet à son utilisateur de couper la vison d'un ennemi ce qui l'empêche d'attaquer au tour suivant. Cet effet est inefficace contre le boss final.",
+	Description: "Coupe la vision d'un ennemi, l'empêchant d'attaquer au tour suivant. Inefficace contre le boss final.",
 	Consommable: false,
 }
 
 var Surchauffe = Item{
 	Nom:         "Surchauffe",
 	Prix:        500,
-	Description: "Ce hack permet à son utilisateur de faire surchauffer les implants de son ennemi lui infligeant des dégâts sur 3 tours. Dégâts : légers.",
+	Description: "Fait surchauffer les implants d'un ennemi, infligeant des dégâts légers sur 3 tours.",
 	Consommable: false,
 }
 
 var Circuit = Item{
-	Nom:         "Court circuit",
+	Nom:         "Court-circuit",
 	Prix:        1000,
-	Description: "Ce hack permet à son utilisateur de créer un court circuit chez l'ennemi. Dégâts : élevé.",
+	Description: "Crée un court-circuit chez l'ennemi. Dégâts élevés.",
 	Consommable: false,
 }
 
