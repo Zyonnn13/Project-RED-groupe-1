@@ -143,10 +143,13 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	switch choice {
 	case "1":
 		histoire.CorpoHistoire()
+		histoire.StartCorpo(character)
 	case "2":
 		histoire.NomadeHistoire()
+		histoire.StartNomade(character)
 	case "3":
 		histoire.GosseHistoire()
+		histoire.StartGosse(character)
 
 		if choice == "1" || choice == "2" || choice == "3" {
 			break

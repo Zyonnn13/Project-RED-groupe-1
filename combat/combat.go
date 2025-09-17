@@ -2,85 +2,51 @@ package combat
 
 import (
 	"Project-RED-groupe-1/player"
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
+	"math/rand"
+	"time"
 )
 
-func GoblinPattern(player *player.Designplayer) {
-	goblin := IniAgentCorpo()
-	turn := 1
+func LancerCombat(joueur *player.Designplayer, ennemi Ennemis) {
+	rand.Seed(time.Now().UnixNano())
 
-	fmt.Println("\n Début du combat d'entraînement contre le Gobelin !")
+	fmt.Printf("Un combat commence contre %s !\n", ennemi.Name)
 
-	for player.HP > 0 {
-		var damage int
-		if turn%3 == 0 {
-			damage = goblin.Attaque * 2
-		} else {
-			damage = goblin.Attaque
+	for joueur.HP > 0 && ennemi.Hp > 0 {
+		// Tour du joueur
+		damage := calcDamage(joueur.Attack)
+		ennemi.Hp -= damage
+		if ennemi.Hp < 0 {
+			ennemi.Hp = 0
 		}
+		fmt.Printf("%s attaque et inflige %d dégâts. HP ennemi : %d/%d\n",
+			joueur.Name, damage, ennemi.Hp, ennemi.MaxHp)
 
-		player.HP -= damage
-		if player.HP < 0 {
-			player.HP = 0
-		}
-
-		fmt.Printf("Tour %d : %s inflige à %s %d de dégâts.\n", turn, goblin.Name, player.Name, damage)
-		fmt.Printf("PV de %s : %d/%d\n", player.Name, player.HP, player.MaxHP)
-
-		if player.HP == 0 {
-			fmt.Printf("\n %s est KO. Fin du combat.\n", player.Name)
+		if ennemi.Hp <= 0 {
+			fmt.Printf("%s est vaincu !\n", ennemi.Name)
 			break
 		}
-		turn++
+
+		// Tour de l'ennemi
+		damage = calcDamage(ennemi.Attaque)
+		joueur.HP -= damage
+		if joueur.HP < 0 {
+			joueur.HP = 0
+		}
+		fmt.Printf("%s attaque et inflige %d dégâts. HP joueur : %d/%d\n",
+			ennemi.Name, damage, joueur.HP, joueur.MaxHP)
+
+		if joueur.HP <= 0 {
+			fmt.Printf("Vous avez été vaincu par %s...\n", ennemi.Name)
+			break
+		}
 	}
 }
 
-func CharacterTurn(p *player.Designplayer, m *NCPD) {
-	reader := bufio.NewReader(os.Stdin)
-
-	fmt.Println("\n🎮 Ton tour de jeu !")
-	fmt.Println("1 - Attaquer")
-	fmt.Println("2 - Inventaire")
-
-	fmt.Print("Choix : ")
-	choice, _ := reader.ReadString('\n')
-	choice = strings.TrimSpace(choice)
-
-	switch choice {
-	case "1":
-		// Attaque basique
-		damage := 5
-		m.Hp -= damage
-		if m.Hp < 0 {
-			m.Hp = 0
-		}
-
-		fmt.Printf("\n %s utilise Attaque basique et inflige %d dégâts à %s !\n", p.Name, damage, m.Name)
-		fmt.Printf("PV de %s : %d/%d\n", m.Name, m.Hp, m.MaxHp)
-
-		if m.Hp == 0 {
-			fmt.Printf("✅ %s est vaincu !\n", m.Name)
-			return
-		}
-
-		fmt.Println("\n Tour du monstre !")
-		p.HP -= m.Attaque
-		if p.HP < 0 {
-			p.HP = 0
-		}
-		fmt.Printf("%s inflige %d dégâts à %s.\n", m.Name, m.Attaque, p.Name)
-		fmt.Printf("PV de %s : %d/%d\n", p.Name, p.HP, p.MaxHP)
-
-		if p.HP == 0 {
-			fmt.Printf(" %s est KO...\n", p.Name)
-		}
-
-	case "2":
-		fmt.Println("\n Inventaire : (fonctionnalité à venir...)")
-	default:
-		fmt.Println(" Choix invalide.")
+func calcDamage(base int) int {
+	variance := base / 10
+	if variance < 1 {
+		variance = 1
 	}
+	return base + rand.Intn(variance*2+1) - variance
 }
