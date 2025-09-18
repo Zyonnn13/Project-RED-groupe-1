@@ -23,7 +23,7 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 		actionDone := false
 		for !actionDone {
 			fmt.Println("\nQue veux-tu faire ?")
-			fmt.Println("1 - Attaquer avec votre armes")
+			fmt.Println("1 - Attaquer avec votre arme")
 			fmt.Println("2 - Inventaire")
 			fmt.Print("\nChoix : ")
 
@@ -32,7 +32,6 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 
 			switch choice {
 			case "1":
-				// Attaque
 				degat, crit := joueur.Arme.Attaque()
 				ennemi.HP -= degat
 				if ennemi.HP < 0 {
@@ -40,18 +39,18 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 				}
 				if degat > 0 {
 					if crit {
-						fmt.Printf("\n💥 COUP CRITIQUE ! Tu attaques %s avec ton %s et infliges %d dégâts !\n", ennemi.Name, joueur.Arme.Nom, degat)
+						fmt.Printf("\n COUP CRITIQUE ! Tu attaques %s avec ton %s et infliges %d dégâts !\n", ennemi.Name, joueur.Arme.Nom, degat)
 					} else {
 						fmt.Printf("\nTu attaques %s avec ton %s et infliges %d dégâts.\n", ennemi.Name, joueur.Arme.Nom, degat)
 					}
 				} else {
-					fmt.Printf("\n❌ Tu attaques %s avec ton %s... mais tu rates !\n", ennemi.Name, joueur.Arme.Nom)
+					fmt.Printf("\n Tu attaques %s avec ton %s... mais tu rates !\n", ennemi.Name, joueur.Arme.Nom)
 				}
 				joueur.AfficherBarreDeVie("compact")
 				ennemi.AfficherBarreDeVie("compact")
+				actionDone = true
 
 			case "2":
-				// Inventaire
 				inv.ShowInventory()
 				fmt.Print("Quel objet veux-tu utiliser ? ")
 				itemChoice, _ := reader.ReadString('\n')
@@ -59,15 +58,13 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 				if itemChoice == "" {
 					continue
 				}
-				success := inv.UseItem(itemChoice, joueur)
-				if success {
+				if inv.UseItem(itemChoice, joueur) {
 					actionDone = true
-				} else {
-					fmt.Println("Objet non trouvé dans l'inventaire.")
-
 				}
+
 			default:
 				fmt.Println("Choix invalide, ton tour est perdu !")
+				actionDone = true
 			}
 
 			if ennemi.HP <= 0 {
@@ -85,40 +82,17 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 
 			if joueur.HP <= 0 {
 				fmt.Println("💀 Tu as été vaincu...")
-				fmt.Println(` ________  ________  _____ ______   _______           ________  ___      ___ _______   ________     
-|\   ____\|\   __  \|\   _ \  _   \|\  ___ \         |\   __  \|\  \    /  /|\  ___ \ |\   __  \    
-\ \  \___|\ \  \|\  \ \  \\\__\ \  \ \   __/|        \ \  \|\  \ \  \  /  / | \   __/|\ \  \|\  \   
- \ \  \  __\ \   __  \ \  \\|__| \  \ \  \_|/__       \ \  \\\  \ \  \/  / / \ \  \_|/_\ \   _  _\  
-  \ \  \|\  \ \  \ \  \ \  \    \ \  \ \  \_|\ \       \ \  \\\  \ \    / /   \ \  \_|\ \ \  \\  \| 
-   \ \_______\ \__\ \__\ \__\    \ \__\ \_______\       \ \_______\ \__/ /     \ \_______\ \__\\ _\ 
-    \|_______|\|__|\|__|\|__|     \|__|\|_______|        \|_______|\|__|/       \|_______|\|__|\|__|
-                                                                                                    
-                                                                                                    
-                                                                                                    `)
 				os.Exit(0)
 			}
 		}
-
-		fmt.Println("Fin du combat.")
 	}
-
+	fmt.Println("Fin du combat.")
 }
 
 func afficherStats(joueur *player.Player, ennemi Ennemis) {
-	fmt.Printf("\n--- Statut ---\n")
-	fmt.Printf("❤️ %s : %d/%d HP\n", joueur.Name, joueur.HP, joueur.MaxHP)
-	fmt.Printf("💀 %s : %d/%d HP\n", ennemi.Name, ennemi.HP, ennemi.MaxHP)
+	fmt.Println("\n--- Statut ---")
+	fmt.Printf("%s : %d/%d HP\n", joueur.Name, joueur.HP, joueur.MaxHP)
 	joueur.AfficherBarreDeVie("compact")
-
-	fmt.Printf("💀 %s : %d/%d HP\n", ennemi.Name, ennemi.HP, ennemi.MaxHP)
+	fmt.Printf(" %s : %d/%d HP\n", ennemi.Name, ennemi.HP, ennemi.MaxHP)
 	ennemi.AfficherBarreDeVie("compact")
-
-}
-
-func CalcDamage(base int) int {
-	variance := base / 5
-	if variance < 1 {
-		variance = 1
-	}
-	return base + rand.Intn(variance*2+1) - variance
 }

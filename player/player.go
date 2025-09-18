@@ -27,6 +27,7 @@ type Player struct {
 func NewPlayer() *Player {
 	reader := bufio.NewReader(os.Stdin)
 	p := &Player{}
+	p.Eddies = monnaie.NewEddies(0)
 
 	fmt.Println("                                                                                    Création de ton personnage                                                                ")
 	fmt.Println()
