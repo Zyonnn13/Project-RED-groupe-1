@@ -3,12 +3,12 @@ package shop
 import (
 	"bufio"
 	"fmt"
+	"strconv"
 	"strings"
 
 	armes "Project-RED-groupe-1/Armes"
 	"Project-RED-groupe-1/inventaire"
 	"Project-RED-groupe-1/monnaie"
-	"strconv"
 )
 
 func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventaire.Inventory, delay int) {
@@ -39,20 +39,24 @@ func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventai
 	}
 
 	cout := 10 + (niveau-1)*20
-
 	componentName := fmt.Sprintf("Composant Niveau %d", niveau)
 
+	// Vérifier que le joueur possède le composant
 	if !inventory.HasItem(componentName) {
 		fmt.Printf("Vous avez besoin de '%s' pour crafter cette arme.\n", componentName)
 		return
 	}
 
+	// Vérifier qu'il a assez d'eddies
 	if !eddies.Spend(cout) {
 		fmt.Println("Pas assez d’eddies pour crafter.")
 		return
 	}
 
+	// Consommer le composant
 	inventory.RemoveItem(componentName)
+
+	// Déterminer l'arme à crafter
 	var arme armes.Arme
 	switch typeChoix {
 	case 1:
@@ -135,12 +139,14 @@ func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventai
 		}
 	}
 
+	// Créer l'Item à ajouter dans l'inventaire
 	item := inventaire.Item{
 		Nom:         fmt.Sprintf("%s (Niv %d)", arme.Nom, niveau),
-		Type:        "arme",      // ou "arme à feu", selon ton système
-		Effet:       arme.Degats, // ou une autre propriété si Degats n'existe pas
+		Type:        "arme",
+		Effet:       arme.Degats, // ou la propriété correspondante
 		Consommable: false,
 	}
+
 	inventory.AddItem(item)
 	fmt.Printf("Vous avez crafté %s (niveau %d) pour %d eddies. Composant consommé: %s\n", arme.Nom, niveau, cout, componentName)
 }
