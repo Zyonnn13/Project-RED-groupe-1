@@ -166,7 +166,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 
 	inventory := inventaire.NewInventory()
-	inventory.AddItem("maxdoc")
 	inventory.ShowInventory()
 
 	for {
@@ -186,7 +185,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			fmt.Printf("Nom : %s\n", p.Name)
 			fmt.Printf("Classe : %s\n", p.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
-			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
+			fmt.Printf(" Soldes d'Eddies :%d\n ", eddies.GetBalance())
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
@@ -252,20 +251,19 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					index := -1
 					fmt.Sscanf(numStr, "%d", &index)
 					if index >= 1 && index <= len(items) {
-						item := items[index-1]
-						if eddies.Spend(item.Prix) {
-							inventory.AddItem(item.Nom)
-							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
+						obj := items[index-1]
+						if eddies.Spend(obj.Prix) {
+							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", obj.Nom, obj.Prix), delay)
 							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
+							fmt.Printf("Eddies restants :%d\n ", eddies.GetBalance())
 						}
 					} else {
 						fmt.Println("Numéro invalide.")
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
-
 				case "R":
 					fmt.Println("Retour au menu principal...")
 					break
