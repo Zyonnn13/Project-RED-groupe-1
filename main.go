@@ -144,28 +144,24 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	inventory := inventaire.NewInventory()
 	switch choice {
 	case "1":
-		histoire.CorpoHistoire()
+		histoire.CorpoHistoire(character)
 		histoire.StartCorpo(character, inventory)
-		combat.LancerCombat(character, combat.Agentcorpo, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Agentcorpo, inventory)
 
 	case "2":
 		histoire.NomadeHistoire()
-		histoire.StartNomade(character)
-		combat.LancerCombat(character, combat.Ncpd, &inventaire.Inventory{})
+		histoire.StartNomade(character, inventory)
+		combat.LancerCombat(character, combat.Ncpd, inventory)
 	case "3":
 		histoire.GosseHistoire()
-		histoire.StartGosse(character)
-		combat.LancerCombat(character, combat.Adam, &inventaire.Inventory{})
+		histoire.StartGosse(character, inventory)
+		combat.LancerCombat(character, combat.Adam, inventory)
 
 		if choice == "1" || choice == "2" || choice == "3" {
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
 
-<<<<<<< HEAD
-	inventory := inventaire.NewInventory()
-=======
->>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
 	inventory.ShowInventory()
 
 	for {
@@ -185,7 +181,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 			fmt.Printf("Nom : %s\n", character.Name)
 			fmt.Printf("Classe : %s\n", character.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
-			fmt.Printf(" Soldes d'Eddies :%d\n ", eddies.GetBalance())
+			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
 
@@ -204,23 +200,16 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Redemarrage,
 				shop.Surchauffe,
 				shop.Circuit,
-				shop.Composant1,
-				shop.Composant2,
-				shop.Composant3,
-				shop.Composant4,
-				shop.Composant5,
 			}
 
 			for {
-				fmt.Println("\n===== MENU BOUTIQUE =====")
+				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
 
 				fmt.Println("\nA. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
-				fmt.Println("C. Crafter une arme")
-				fmt.Println("V. Vendre un objet")
 				fmt.Println("R. Revenir au menu principal")
 				fmt.Print("Votre choix : ")
 
@@ -249,6 +238,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
+
 				case "B":
 					fmt.Print("Entrez le numéro de l’objet à acheter : ")
 					numStr, _ := reader.ReadString('\n')
@@ -256,37 +246,24 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					index := -1
 					fmt.Sscanf(numStr, "%d", &index)
 					if index >= 1 && index <= len(items) {
-<<<<<<< HEAD
-						obj := items[index-1]
-						if eddies.Spend(obj.Prix) {
-							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", obj.Nom, obj.Prix), delay)
-=======
 						item := items[index-1]
 						if eddies.Spend(item.Prix) {
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
->>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
 							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
-							fmt.Printf("Eddies restants :%d\n ", eddies.GetBalance())
 						}
 					} else {
 						fmt.Println("Numéro invalide.")
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
-<<<<<<< HEAD
-=======
-				case "C":
-					shop.CraftArme(reader, &eddies, &inventory, delay)
-				case "V":
-					shop.VendreObjet(reader, &eddies, &inventory, items)
->>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
+
 				case "R":
 					fmt.Println("Retour au menu principal...")
-					break
+
 				default:
-					fmt.Println("Choix invalide.")
+					fmt.Println("Choix invalide. Veuillez réessayer.")
 				}
 
 				if shopChoice == "R" {

@@ -1,17 +1,16 @@
 package shop
 
 import (
+	"Project-RED-groupe-1/inventaire"
+	"Project-RED-groupe-1/monnaie"
 	"bufio"
 	"fmt"
 	"strings"
-	"Project-RED-groupe-1/Shop/shop"
-	"Project-RED-groupe-1/monnaie"
-	"Project-RED-groupe-1/Inventaire"
 )
 
-func VendreObjet(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventaire.Inventory, items []shop.Item) {
+func VendreObjet(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventaire.Inventory, items []Item) {
 	fmt.Println("Votre inventaire :")
-	inventory.Showinventory()
+	inventory.ShowInventory()
 
 	fmt.Print("Entrez le nom exact de l’objet à vendre : ")
 	objet, _ := reader.ReadString('\n')
@@ -35,7 +34,7 @@ func VendreObjet(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *invent
 		return
 	}
 
-	inventory.Removeitem(objet)
+	inventory.RemoveItem(objet)
 	eddies.Add(prixVente)
 	fmt.Printf("Vous avez vendu %s pour %d eddies.\n", objet, prixVente)
 }

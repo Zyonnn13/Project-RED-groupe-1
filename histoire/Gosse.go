@@ -10,78 +10,104 @@ import (
 	"strings"
 )
 
+// Histoire Gosse des rues
 func GosseHistoire() {
 	fmt.Println("\n=== Histoire Gosse des rues ===")
-	fmt.Println("Heywood, ton quartier. Les ruelles sentent la sueur, le chrome et les deals foireux.")
-	fmt.Println("Ton ami Pepe t’appelle à l’aide : il doit de l’argent à Kirk, un petit caïd local lié aux Valentinos.")
-	fmt.Println("Tu décides d’aller voir Kirk dans une arrière-salle d’un bar miteux...")
+	fmt.Println("Spawn : El Coyote Cojo, un bar du district de Heywood, connu pour ses gangs.")
+	fmt.Println("Ton personnage a le nez cassé, que vous replacez avant de commencer.")
+	fmt.Println("Le patron du bar vous demande de l’aider car il doit de l’argent à Kirk.")
+	fmt.Println("Kirk vous propose de voler une voiture en échange de le laisser tranquille.")
 }
 
-func StartGosse(p *player.Player) {
+// Début de l’aventure interactive
+func StartGosse(p *player.Player, inv *inventaire.Inventory) {
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("\nComment veux-tu gérer Kirk et sa dette ?")
-	fmt.Println("1 \t- Accepter de négocier")
-	fmt.Println("2 \t- Proposer de rembourser toi-même")
-	fmt.Println("3 \t- Tendre un piège à Kirk")
-	fmt.Println("4 \t- [Gosse des rues] Appeler un gang allié")
+	fmt.Println("\nQue fais-tu ?")
+	fmt.Println("1 - Accepter de voler la voiture Rayfield Aerondight")
+	fmt.Println("2 - Refuser et rester au bar")
+	fmt.Println("3 - Explorer le quartier pour récupérer des infos")
 
+	fmt.Print("\nChoix : ")
 	choice, _ := reader.ReadString('\n')
 	choice = strings.TrimSpace(choice)
 
 	switch choice {
 	case "1":
-		fmt.Println("\nTu rencontres Kirk dans une arrière-salle. Les Valentinos te fixent froidement.")
-		if persuasionReussie() {
-			fmt.Println("Ta persuasion réussit ! Pas de combat, Kirk accepte de réduire la dette.")
-		} else {
-			fmt.Println(" Échec de persuasion... Les Valentinos passent à l’attaque !")
-			ennemi := combat.Valentinos
-			fmt.Printf("\n %s apparaît !\n", ennemi.Name)
-			fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
-			fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
+		fmt.Println("\nVous vous rendez à la voiture pour le vol.")
+		fmt.Println("Le gadget ne fonctionne pas et la voiture déclenche l’alarme !")
 
-			combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
-		}
+		// Combat contre la police
+		fmt.Println("La police arrive sur le champ ! Combat engagé !")
+		combat.LancerCombat(p, combat.Agentarasaka, inv)
+
+		// Apparition de Jackie
+		fmt.Println("\nUn mystérieux allié apparaît : Jackie !")
+		fmt.Println("Grâce à lui, le combat se réengage et vous parvenez à battre la police.")
+		combat.LancerCombat(p, combat.Agentarasaka, inv)
+
+		// Récompenses et progression
+		fmt.Println("\nVous et Jackie êtes désormais partenaires. Vous menez plusieurs contrats pendant les 6 prochains mois,")
+		fmt.Println("et votre réputation de rue atteint le niveau 1.")
+
+		p.Eddies.Add(100)
+		inv.AddItem(inventaire.Item{
+			Nom:         "Rayfield Aerondight",
+			Description: "Voiture volée lors de la première mission",
+			Type:        "vehicule",
+			Effet:       0,
+			Consommable: false,
+		})
 
 	case "2":
-		fmt.Println("\nTu poses ton fric sur la table. Kirk ricane, prend l’argent et repart satisfait.")
-		fmt.Println("Tu perds beaucoup d’argent, mais Pepe devient ton allié loyal.")
-		if p.Eddies.Spend(100) {
-			fmt.Println(" Tu perds 200 eddies, mais Pepe devient ton allié loyal.")
-		} else {
-			fmt.Println(" Tu n’as pas assez d’eddies pour convaincre Pepe.")
-			fmt.Printf("💰 Solde actuel : %d eddies\n", p.Eddies.GetBalance())
-		}
-
+		fmt.Println("\nVous décidez de rester au bar. Rien ne se passe, mais vous restez en sécurité.")
 	case "3":
-		fmt.Println("\nTu tends un piège à Kirk dans une ruelle sombre...")
-		ennemi1 := combat.Kirk
-		ennemi2 := combat.Valentinos
-		ennemi3 := combat.Valentinos
-		fmt.Println(" Kirk et ses deux sbires sortent leurs armes !")
-		combat.LancerCombat(p, ennemi1, &inventaire.Inventory{})
-		if p.HP > 0 {
-			combat.LancerCombat(p, ennemi2, &inventaire.Inventory{})
-		}
-		if p.HP > 0 {
-			combat.LancerCombat(p, ennemi3, &inventaire.Inventory{})
-		}
-
-	case "4":
-		fmt.Println("\nTu appelles un gang rival (les 6th Street). Ils interviennent et forcent Kirk à annuler la dette.")
-		fmt.Println("Pas de combat, mais tu perds ton joker : ils ne t’aideront plus jamais.")
-		fmt.Println("Les Valentinos, eux, te gardent désormais à l’œil...")
+		fmt.Println("\nEn explorant Heywood, vous récupérez quelques informations sur les gangs locaux.")
+		p.Eddies.Add(20)
+		fmt.Println("🎁 Tu gagnes 20 eddies en récupérant ces infos.")
 
 	default:
-		fmt.Println("Choix invalide. Kirk t’ignore et la situation empire pour Pepe.")
+		fmt.Println("Choix invalide. Le temps passe et l’opportunité s’éloigne...")
 	}
+
+	// Suite possible : missions supplémentaires
+	StartGosseSuite(p, inv)
 }
 
-func persuasionReussie() bool {
-	return randInt(0, 1) == 1
-}
+// Suite de l’aventure Gosse des rues
+func StartGosseSuite(p *player.Player, inv *inventaire.Inventory) {
+	reader := bufio.NewReader(os.Stdin)
 
-func randInt(min, max int) int {
-	return min + int(int64(max-min+1)*int64(os.Getpid())%int64(max-min+1))
+	fmt.Println("\nAprès la première mission, tu dois décider de la prochaine étape :")
+	fmt.Println("1 - Accepter un contrat de gang pour voler une cargaison")
+	fmt.Println("2 - Rechercher un allié pour renforcer ton équipe")
+	fmt.Println("3 - Prendre du repos et améliorer ton équipement")
+
+	fmt.Print("\nChoix : ")
+	choice, _ := reader.ReadString('\n')
+	choice = strings.TrimSpace(choice)
+
+	switch choice {
+	case "1":
+		fmt.Println("\nVous partez voler une cargaison sous la protection de Jackie.")
+		combat.LancerCombat(p, combat.Agentarasaka, inv)
+		p.Eddies.Add(50)
+	case "2":
+		fmt.Println("\nVous recrutez un nouvel allié dans le quartier pour renforcer votre équipe.")
+		inv.AddItem(inventaire.Item{
+			Nom:         "Nouvel allié",
+			Description: "Partenaire de mission pour les prochains contrats",
+			Type:        "allie",
+			Effet:       0,
+			Consommable: false,
+		})
+	case "3":
+		fmt.Println("\nVous améliorez votre équipement et récupérez des eddies supplémentaires.")
+		p.Eddies.Add(30)
+	default:
+		fmt.Println("Choix invalide. Tu perds du temps à Heywood...")
+	}
+
+	fmt.Println("\nFélicitations ! Tu as complété la première série de missions de Gosse des rues.")
+	fmt.Println("Ton aventure dans le district de Heywood ne fait que commencer...")
 }
