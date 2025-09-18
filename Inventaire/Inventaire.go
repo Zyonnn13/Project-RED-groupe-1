@@ -5,55 +5,69 @@ import (
 	"fmt"
 )
 
+// Définition d’un objet
+type Item struct {
+	Nom         string
+	Description string
+	Type        string // "soin", "boost", "hack", etc.
+	Effet       int    // Valeur de soin ou boost
+	Consommable bool
+}
+
+// Inventaire du joueur
 type Inventory struct {
-	Items []string
+	Items []Item
 }
 
+// Création d’un nouvel inventaire
 func NewInventory() *Inventory {
-	return &Inventory{Items: []string{}}
+	return &Inventory{Items: []Item{}}
 }
 
-func (inv *Inventory) AddItem(item string) {
+// Ajout d’un objet
+func (inv *Inventory) AddItem(item Item) {
 	inv.Items = append(inv.Items, item)
-	fmt.Println("Tu as ajouté", item)
+	fmt.Printf("📦 Tu as ajouté %s à ton inventaire.\n", item.Nom)
 }
 
+// Affichage de l’inventaire
 func (inv *Inventory) ShowInventory() {
 	fmt.Println("\n📦 Inventaire :")
 	if len(inv.Items) == 0 {
 		fmt.Println("  (vide)")
 		return
 	}
-	for i, obj := range inv.Items {
-		fmt.Printf("  %d. %s\n", i+1, obj)
+	for i, item := range inv.Items {
+		fmt.Printf("  %d. %s - %s\n", i+1, item.Nom, item.Description)
 	}
 }
 
-func (inv *Inventory) UseItem(item string, p *player.Player) bool {
-	for i, obj := range inv.Items {
-		if obj == item {
-			switch item {
-			case "Potion de soin":
-				soin := 20
-				p.HP += soin
+// Utilisation d’un objet
+func (inv *Inventory) UseItem(nom string, p *player.Player) bool {
+	for i, item := range inv.Items {
+		if item.Nom == nom {
+			switch item.Type {
+			case "soin":
+				p.HP += item.Effet
 				if p.HP > p.MaxHP {
 					p.HP = p.MaxHP
 				}
+				fmt.Printf("🧪 %s utilise %s (+%d PV)\n", p.Name, item.Nom, item.Effet)
+				p.AfficherBarreDeVie("compact")
 
-				fmt.Printf("🧪 %s utilise Potion de soin (+%d HP)\n", p.Name, soin)
-
-				fmt.Println("🧪 Vous utilisez un Maxdoc M.K 1")
-				fmt.Printf("❤️ PV de %s : %d / %d\n", p.Name, p.HP, p.MaxHP)
-
-			case "Boost d'attaque":
-				p.Attack += 5
-				fmt.Printf("💪 %s utilise Boost d'attaque (+5 ATK)\n", p.Name)
+			case "boost":
+				p.Attack += item.Effet
+				fmt.Printf("💪 %s utilise %s (+%d ATK)\n", p.Name, item.Nom, item.Effet)
 
 			default:
-				fmt.Println("❌ Effet inconnu pour", item)
+				fmt.Println("❌ Effet inconnu pour", item.Nom)
 				return false
 			}
-			inv.Items = append(inv.Items[:i], inv.Items[i+1:]...)
+
+			// Retirer l’objet s’il est consommable
+			if item.Consommable {
+				inv.Items = append(inv.Items[:i], inv.Items[i+1:]...)
+			}
 			return true
 		}
 	}

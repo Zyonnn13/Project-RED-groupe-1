@@ -10,21 +10,23 @@ type Arme struct {
 	Niveau     int
 }
 
-func (a Arme) Attaque() int {
+func (a Arme) Attaque() (int, bool) {
 	if rand.Float64() <= a.Precision {
 		d := a.Degats
+		crit := false
 		if rand.Float64() <= a.CritChance {
-			d *= 2
+			d = int(float64(d) * 1.2)
+			crit = true
 		}
-		return d
+		return d, crit
 	}
-	return 0
+	return 0, false
 }
 
 var Pistolet1 = Arme{
 	Nom:        "Pistolet",
 	Degats:     45,
-	Precision:  0.70,
+	Precision:  0.85,
 	CritChance: 0.20,
 	Niveau:     1,
 }

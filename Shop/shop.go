@@ -5,6 +5,8 @@ type Item struct {
 	Prix        int
 	Description string
 	Consommable bool
+	Effet       int
+	Type        string
 }
 
 var Maxdoc = Item{
@@ -12,6 +14,8 @@ var Maxdoc = Item{
 	Prix:        50,
 	Description: "Le MaxDoc est un inhalateur fabriqué par la Trauma Team. Il permet à l'utilisateur de restaurer 50 PV lorsqu'il est utilisé.",
 	Consommable: true,
+	Effet:       50,
+	Type:        "soin",
 }
 
 var Revitalisant = Item{
@@ -26,6 +30,8 @@ var Frag = Item{
 	Prix:        120,
 	Description: "Cette grenade inflige des dégâts modérés à tous les ennemis.",
 	Consommable: true,
+	Effet:       30,
+	Type:        "dégâts",
 }
 
 var Flash = Item{
@@ -33,6 +39,8 @@ var Flash = Item{
 	Prix:        150,
 	Description: "Aveugle tous les ennemis, les empêchant d'attaquer au tour suivant. Inefficace contre le boss final.",
 	Consommable: true,
+	Effet:       0,
+	Type:        "controle",
 }
 
 var Redemarrage = Item{
