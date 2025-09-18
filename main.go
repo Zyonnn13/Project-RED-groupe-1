@@ -141,11 +141,11 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
-
+	inventory := inventaire.NewInventory()
 	switch choice {
 	case "1":
 		histoire.CorpoHistoire()
-		histoire.StartCorpo(character)
+		histoire.StartCorpo(character, inventory)
 		combat.LancerCombat(character, combat.Agentcorpo, &inventaire.Inventory{})
 
 	case "2":
@@ -158,12 +158,10 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		combat.LancerCombat(character, combat.Adam, &inventaire.Inventory{})
 
 		if choice == "1" || choice == "2" || choice == "3" {
-			break
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
 
-	inventory := inventaire.NewInventory()
 	inventory.ShowInventory()
 
 	for {
