@@ -12,17 +12,17 @@ import (
 
 func CorpoHistoire() {
 	fmt.Println("\n=== Histoire Corpo ===")
-	fmt.Println("Les néons de Night City se reflètent sur les vitres teintées de la tour Arasaka. Dans ton bureau, un message crypté s’affiche : « V, on a un problème. »")
+	fmt.Printf("Les néons de Night City se reflètent sur les vitres teintées de la tour Arasaka. Dans ton bureau, un message crypté s’affiche : « %s, on a un problème.\n »")
 	fmt.Println("Ton supérieur, Jenkins, t’explique qu’il faut discréditer un rival politique. Tu sais que ce genre de mission ne se termine jamais proprement.")
 }
 
 func StartCorpo(p *player.Player) {
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("Que fais-tu ?")
-	fmt.Println("1- Accepter sans poser de questions ")
-	fmt.Println("2- [Corpo] Utiliser ton réseau pour saboter ton rival avant même la mission ")
-	fmt.Println("3- Refuser ")
+	fmt.Println("\n Que fais-tu ?")
+	fmt.Println("1\t- Accepter sans poser de questions ")
+	fmt.Println("2\t- [Corpo] Utiliser ton réseau pour saboter ton rival avant même la mission ")
+	fmt.Println("3\t- Refuser ")
 
 	choice, _ := reader.ReadString('\n')
 	choice = strings.TrimSpace(choice)
@@ -31,7 +31,9 @@ func StartCorpo(p *player.Player) {
 	case "1":
 		fmt.Println("Jenkins t’accorde sa confiance, mais tu te retrouves sur le terrain face à des opposants.")
 		ennemi := combat.Ncpd
-		fmt.Printf("%s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		fmt.Printf("\n %s apparaît !\n", ennemi.Name)
+		fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
+		fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
 
 		combat.LancerCombat(p, combat.Ncpd, &inventaire.Inventory{})
 
@@ -41,7 +43,9 @@ func StartCorpo(p *player.Player) {
 	case "3":
 		fmt.Println("Refuser un ordre direct de Jenkins est dangereux... Tu sens que cela ne va pas bien se terminer.")
 		ennemi := combat.Agentcorpo
-		fmt.Printf("%s est envoyé pour te punir ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		fmt.Printf("\n %s apparaît !\n", ennemi.Name)
+		fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
+		fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
 
 		combat.LancerCombat(p, combat.Agentcorpo, &inventaire.Inventory{})
 	}

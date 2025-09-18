@@ -33,13 +33,19 @@ func StartNomade(p *player.Player) {
 	case "1":
 		fmt.Println("\nTu charges les Wraiths, arme en main !")
 		ennemi := combat.Wraiths
-		fmt.Printf("%s apparaît ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		fmt.Printf("\n %s apparaît !\n", ennemi.Name)
+		fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
+		fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
+
 		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	case "2":
 		fmt.Println("\nGrâce à ta conduite, tu fais fuir une partie du gang… mais certains restent.")
 		ennemi := combat.Tygerclaws
-		fmt.Printf("%s surgit ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		fmt.Printf("\n %s apparaît !\n", ennemi.Name)
+		fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
+		fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
+
 		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	case "3":
@@ -47,7 +53,10 @@ func StartNomade(p *player.Player) {
 
 		fmt.Println("Mais les Wraiths refusent et ouvrent le feu !")
 		ennemi := combat.Wraiths
-		fmt.Printf("%s attaque ! (HP: %d | ATK: %d)\n", ennemi.Name, ennemi.HP, ennemi.Attack)
+		fmt.Printf("\n %s apparaît !\n", ennemi.Name)
+		fmt.Printf(" HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
+		fmt.Println("\n Un combat commence ! Prépare-toi à riposter.")
+
 		combat.LancerCombat(p, ennemi, &inventaire.Inventory{})
 
 	default:

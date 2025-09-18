@@ -96,8 +96,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	printlnSlow("Choisis ta classe au sein de Night City", delay)
 
-	p := &player.Player{}
-
 	printlnSlow("1 - Corpo", delay)
 	printlnSlow(green+"  Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie."+reset, delay)
 
@@ -118,11 +116,11 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
-
-	p.ChooseClass(choice)
-	printlnSlow(fmt.Sprintf("\nTu es un %s !", p.Class), delay)
-
 	character := player.NewPlayer()
+
+	character.ChooseClass(choice)
+	printlnSlow(fmt.Sprintf("\nTu es un %s !", character.Class), delay)
+
 	character.Arme = armes.Pistolet1
 
 	printlnSlow("\n╔════════════════════════════════════════════════════════════════════╗", 5*time.Millisecond)
@@ -137,7 +135,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	eddies := monnaie.NewEddies(200)
 	character.HP = 100
 	character.MaxHP = 100
-	character.AfficherBarreDeSante()
+	character.AfficherBarreDeVie("compact")
 
 	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme de débarquement avec 40 pourcent de précision. Bonne chance", eddies.GetBalance()), delay)
 
@@ -148,16 +146,16 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	case "1":
 		histoire.CorpoHistoire()
 		histoire.StartCorpo(character)
-		combat.LancerCombat(p, combat.Agentcorpo, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Agentcorpo, &inventaire.Inventory{})
 
 	case "2":
 		histoire.NomadeHistoire()
 		histoire.StartNomade(character)
-		combat.LancerCombat(p, combat.Ncpd, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Ncpd, &inventaire.Inventory{})
 	case "3":
 		histoire.GosseHistoire()
 		histoire.StartGosse(character)
-		combat.LancerCombat(p, combat.Adam, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Adam, &inventaire.Inventory{})
 
 		if choice == "1" || choice == "2" || choice == "3" {
 			break
@@ -166,7 +164,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	}
 
 	inventory := inventaire.NewInventory()
-	inventory.AddItem("maxdoc")
 	inventory.ShowInventory()
 
 	for {
@@ -183,8 +180,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		switch menuChoice {
 		case "1":
 			printlnSlow("\n=== INFOS PERSONNAGE ===", delay)
-			fmt.Printf("Nom : %s\n", p.Name)
-			fmt.Printf("Classe : %s\n", p.Class)
+			fmt.Printf("Nom : %s\n", character.Name)
+			fmt.Printf("Classe : %s\n", character.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
 			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
@@ -192,7 +189,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		case "2":
 			printlnSlow("\n=== INVENTAIRE ===", delay)
-			inventory := inventaire.NewInventory()
 			inventory.ShowInventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
@@ -260,7 +256,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					if index >= 1 && index <= len(items) {
 						item := items[index-1]
 						if eddies.Spend(item.Prix) {
-							inventory.AddItem(item.Nom)
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
 							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
