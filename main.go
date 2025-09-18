@@ -206,16 +206,23 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Redemarrage,
 				shop.Surchauffe,
 				shop.Circuit,
+				shop.Composant1,
+				shop.Composant2,
+				shop.Composant3,
+				shop.Composant4,
+				shop.Composant5,
 			}
 
 			for {
-				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
+				fmt.Println("\n===== MENU BOUTIQUE =====")
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
 
 				fmt.Println("\nA. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
+				fmt.Println("C. Crafter une arme")
+				fmt.Println("V. Vendre un objet")
 				fmt.Println("R. Revenir au menu principal")
 				fmt.Print("Votre choix : ")
 
@@ -244,7 +251,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
-
 				case "B":
 					fmt.Print("Entrez le numéro de l’objet à acheter : ")
 					numStr, _ := reader.ReadString('\n')
@@ -265,13 +271,15 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
-
+				case "C":
+					shop.CraftArme(reader, &eddies, &inventory, delay)
+				case "V":
+					shop.VendreObjet(reader, &eddies, &inventory, items)
 				case "R":
 					fmt.Println("Retour au menu principal...")
 					break
-
 				default:
-					fmt.Println("Choix invalide. Veuillez réessayer.")
+					fmt.Println("Choix invalide.")
 				}
 
 				if shopChoice == "R" {
