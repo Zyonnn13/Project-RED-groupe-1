@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-// Histoire Corpo avec nom du joueur
 func CorpoHistoire(p *player.Player) {
 	fmt.Println("\n=== Histoire Corpo ===")
 	fmt.Printf(
@@ -43,7 +42,6 @@ func StartCorpo(p *player.Player, inv *inventaire.Inventory) {
 
 		combat.LancerCombat(p, ennemi, inv)
 
-		// Récompense après combat
 		fmt.Println("\n🎁 Tu fouilles la zone et trouves un Maxdoc et 100 eddies !")
 		inv.AddItem(inventaire.Item{
 			Nom:         "Maxdoc M.K 1",
@@ -66,7 +64,6 @@ func StartCorpo(p *player.Player, inv *inventaire.Inventory) {
 
 		combat.LancerCombat(p, ennemi, inv)
 
-		// Récompense après combat
 		fmt.Println("\n🎁 Tu fouilles la zone et trouves un Maxdoc et 100 eddies !")
 		inv.AddItem(inventaire.Item{
 			Nom:         "Maxdoc M.K 1",

@@ -1,19 +1,17 @@
 package shop
 
 import (
+	"Project-RED-groupe-1/armes"
+	"Project-RED-groupe-1/inventaire"
+	"Project-RED-groupe-1/monnaie"
 	"bufio"
 	"fmt"
-	"strings"
-
-	"Project-RED-groupe-1/monnaie"
-	"Project-RED-groupe-1/Inventaire"
-	"Project-RED-groupe-1/Armes"
 	"strconv"
-
+	"strings"
 )
 
 func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventaire.Inventory, delay int) {
-	
+
 	fmt.Print("Entrez le niveau de l’arme à crafter (1-5) : ")
 	numStr, _ := reader.ReadString('\n')
 	numStr = strings.TrimSpace(numStr)
@@ -23,7 +21,6 @@ func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventai
 		return
 	}
 
-	
 	fmt.Println("Choisissez le type d’arme :")
 	fmt.Println("1. Pistolet")
 	fmt.Println("2. Fusil à pompe")
@@ -40,26 +37,21 @@ func CraftArme(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventai
 		return
 	}
 
-	
 	cout := 10 + (niveau-1)*20
 
-	
 	componentName := fmt.Sprintf("Composant Niveau %d", niveau)
 
-	
-	if !inventory.HasItem(componentName) {
-		fmt.Printf("Vous avez besoin de '%s' pour crafter cette arme.\n", componentName)
+	if !inventory.jpossItemm(Item.Nom) {
+		fmt.Printf("Vous avez besoin de '%s' pour crafter cette arme.\n", Item.Nom)
 		return
 	}
-
 
 	if !eddies.Spend(cout) {
 		fmt.Println("Pas assez d’eddies pour crafter.")
 		return
 	}
 
-	
-	inventory.Removeitem(componentName)
+	inventory.UseItem(Item.Nom)
 
 	var arme armes.Arme
 	switch typeChoix {

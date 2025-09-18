@@ -1,7 +1,7 @@
 package player
 
 import (
-	armes "Project-RED-groupe-1/Armes"
+	armes "Project-RED-groupe-1/armes"
 	"Project-RED-groupe-1/monnaie"
 	"bufio"
 	"fmt"
@@ -23,7 +23,7 @@ type Player struct {
 	Eddies *monnaie.Eddies
 }
 
-// Création complète du personnage
+
 func NewPlayer() *Player {
 	reader := bufio.NewReader(os.Stdin)
 	p := &Player{}
@@ -32,7 +32,7 @@ func NewPlayer() *Player {
 	fmt.Println("                                                                                    Création de ton personnage                                                                ")
 	fmt.Println()
 
-	// Nom
+	
 	for {
 		fmt.Print(" Avant toutes choses tu dois choisir ton nom de personnage : ")
 		name, _ := reader.ReadString('\n')
@@ -56,7 +56,7 @@ func NewPlayer() *Player {
 		}
 	}
 
-	// Couleur de cheveux
+	
 	for {
 		fmt.Println("\n  Choisis ta couleur de cheveux.")
 		fmt.Println(" 1 : Noir ")
@@ -91,7 +91,7 @@ func NewPlayer() *Player {
 		}
 		break
 	}
-	// Couleur des yeux
+	
 	for {
 		fmt.Println("\n Choisis la couleur de tes yeux.")
 		fmt.Println(" 1 : Noir ")
@@ -120,7 +120,7 @@ func NewPlayer() *Player {
 		}
 		break
 	}
-	// Taille
+	
 	for {
 		fmt.Println("\n Choisis ta taille.")
 		fmt.Println(" 1 : Petit ")
@@ -143,7 +143,7 @@ func NewPlayer() *Player {
 	return p
 }
 
-// Choix de la classe et initialisation des stats
+
 func (p *Player) ChooseClass(choice string) {
 	switch strings.TrimSpace(choice) {
 	case "1":
