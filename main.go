@@ -134,7 +134,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		character.Name, character.Hair, character.Eyes, character.Height)
 	fmt.Println("╚════════════════════════════════════════════════════════════════════╝")
 
-	eddies := monnaie.NewEddies(100)
+	eddies := monnaie.NewEddies(200)
 	character.HP = 100
 	character.MaxHP = 100
 	character.AfficherBarreDeSante()
