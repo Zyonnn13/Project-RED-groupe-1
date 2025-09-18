@@ -96,8 +96,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 	printlnSlow("Choisis ta classe au sein de Night City", delay)
 
-	p := &player.Player{}
-
 	printlnSlow("1 - Corpo", delay)
 	printlnSlow(green+"  Tu es un employé ambitieux d’Arasaka, spécialisé dans la sécurité interne. Tu as accès à des informations sensibles, mais ton supérieur te confie une mission qui pourrait te coûter ta carrière… ou ta vie."+reset, delay)
 
@@ -118,11 +116,11 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
-
-	p.ChooseClass(choice)
-	printlnSlow(fmt.Sprintf("\nTu es un %s !", p.Class), delay)
-
 	character := player.NewPlayer()
+
+	character.ChooseClass(choice)
+	printlnSlow(fmt.Sprintf("\nTu es un %s !", character.Class), delay)
+
 	character.Arme = armes.Pistolet1
 
 	printlnSlow("\n╔════════════════════════════════════════════════════════════════════╗", 5*time.Millisecond)
@@ -137,35 +135,37 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	eddies := monnaie.NewEddies(200)
 	character.HP = 100
 	character.MaxHP = 100
-	character.AfficherBarreDeSante()
+	character.AfficherBarreDeVie("compact")
 
 	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme de débarquement avec 40 pourcent de précision. Bonne chance", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
-
+	inventory := inventaire.NewInventory()
 	switch choice {
 	case "1":
 		histoire.CorpoHistoire()
-		histoire.StartCorpo(character)
-		combat.LancerCombat(p, combat.Agentcorpo, &inventaire.Inventory{})
+		histoire.StartCorpo(character, inventory)
+		combat.LancerCombat(character, combat.Agentcorpo, &inventaire.Inventory{})
 
 	case "2":
 		histoire.NomadeHistoire()
 		histoire.StartNomade(character)
-		combat.LancerCombat(p, combat.Ncpd, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Ncpd, &inventaire.Inventory{})
 	case "3":
 		histoire.GosseHistoire()
 		histoire.StartGosse(character)
-		combat.LancerCombat(p, combat.Adam, &inventaire.Inventory{})
+		combat.LancerCombat(character, combat.Adam, &inventaire.Inventory{})
 
 		if choice == "1" || choice == "2" || choice == "3" {
-			break
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
 
+<<<<<<< HEAD
 	inventory := inventaire.NewInventory()
+=======
+>>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
 	inventory.ShowInventory()
 
 	for {
@@ -182,8 +182,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		switch menuChoice {
 		case "1":
 			printlnSlow("\n=== INFOS PERSONNAGE ===", delay)
-			fmt.Printf("Nom : %s\n", p.Name)
-			fmt.Printf("Classe : %s\n", p.Class)
+			fmt.Printf("Nom : %s\n", character.Name)
+			fmt.Printf("Classe : %s\n", character.Class)
 			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
 			fmt.Printf(" Soldes d'Eddies :%d\n ", eddies.GetBalance())
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
@@ -191,7 +191,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 
 		case "2":
 			printlnSlow("\n=== INVENTAIRE ===", delay)
-			inventory := inventaire.NewInventory()
 			inventory.ShowInventory()
 			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
 			reader.ReadString('\n')
@@ -205,16 +204,23 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				shop.Redemarrage,
 				shop.Surchauffe,
 				shop.Circuit,
+				shop.Composant1,
+				shop.Composant2,
+				shop.Composant3,
+				shop.Composant4,
+				shop.Composant5,
 			}
 
 			for {
-				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
+				fmt.Println("\n===== MENU BOUTIQUE =====")
 				for i, item := range items {
 					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
 				}
 
 				fmt.Println("\nA. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
+				fmt.Println("C. Crafter une arme")
+				fmt.Println("V. Vendre un objet")
 				fmt.Println("R. Revenir au menu principal")
 				fmt.Print("Votre choix : ")
 
@@ -243,7 +249,6 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
-
 				case "B":
 					fmt.Print("Entrez le numéro de l’objet à acheter : ")
 					numStr, _ := reader.ReadString('\n')
@@ -251,9 +256,15 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					index := -1
 					fmt.Sscanf(numStr, "%d", &index)
 					if index >= 1 && index <= len(items) {
+<<<<<<< HEAD
 						obj := items[index-1]
 						if eddies.Spend(obj.Prix) {
 							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", obj.Nom, obj.Prix), delay)
+=======
+						item := items[index-1]
+						if eddies.Spend(item.Prix) {
+							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
+>>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
 							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 						} else {
 							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
@@ -264,12 +275,18 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					}
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
+<<<<<<< HEAD
+=======
+				case "C":
+					shop.CraftArme(reader, &eddies, &inventory, delay)
+				case "V":
+					shop.VendreObjet(reader, &eddies, &inventory, items)
+>>>>>>> 6201e347e5deb15fd7f486b9883ced1449981a1b
 				case "R":
 					fmt.Println("Retour au menu principal...")
 					break
-
 				default:
-					fmt.Println("Choix invalide. Veuillez réessayer.")
+					fmt.Println("Choix invalide.")
 				}
 
 				if shopChoice == "R" {

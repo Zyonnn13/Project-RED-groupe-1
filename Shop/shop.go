@@ -5,6 +5,8 @@ type Item struct {
 	Prix        int
 	Description string
 	Consommable bool
+	Effet       int
+	Type        string
 }
 
 var Maxdoc = Item{
@@ -12,6 +14,8 @@ var Maxdoc = Item{
 	Prix:        50,
 	Description: "Le MaxDoc est un inhalateur fabriqué par la Trauma Team. Il permet à l'utilisateur de restaurer 50 PV lorsqu'il est utilisé.",
 	Consommable: true,
+	Effet:       50,
+	Type:        "soin",
 }
 
 var Revitalisant = Item{
@@ -26,6 +30,8 @@ var Frag = Item{
 	Prix:        120,
 	Description: "Cette grenade inflige des dégâts modérés à tous les ennemis.",
 	Consommable: true,
+	Effet:       30,
+	Type:        "dégâts",
 }
 
 var Flash = Item{
@@ -33,6 +39,8 @@ var Flash = Item{
 	Prix:        150,
 	Description: "Aveugle tous les ennemis, les empêchant d'attaquer au tour suivant. Inefficace contre le boss final.",
 	Consommable: true,
+	Effet:       0,
+	Type:        "controle",
 }
 
 var Redemarrage = Item{
@@ -56,4 +64,34 @@ var Circuit = Item{
 	Consommable: false,
 }
 
-//craft d'arme et pas d'achat en boutique objet de craft composant de niveau 1 2 3 4 ou 5
+var Composant1 = Item{
+	Nom:         "Composant Niveau 1",
+	Prix:        10,
+	Description: "Composant basique pour une arme de niveau 1.",
+	Consommable: false,
+}
+var Composant2 = Item{
+	Nom:         "Composant Niveau 2",
+	Prix:        30,
+	Description: "Composant intermédiaire pour une arme de niveau 2.",
+	Consommable: false,
+}
+var Composant3 = Item{
+	Nom:         "Composant Niveau 3",
+	Prix:        50,
+	Description: "Composant avancé pour une arme de niveau 3.",
+	Consommable: false,
+}
+var Composant4 = Item{
+	Nom:         "Composant Niveau 4",
+	Prix:        70,
+	Description: "Composant expert pour une arme de niveau 4.",
+	Consommable: false,
+}
+var Composant5 = Item{
+	Nom:         "Composant Niveau 5",
+	Prix:        90,
+	Description: "Composant ultime pour une arme de niveau 5.",
+	Consommable: false,
+}
+
