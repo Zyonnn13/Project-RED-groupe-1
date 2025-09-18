@@ -64,4 +64,34 @@ var Circuit = Item{
 	Consommable: false,
 }
 
-//craft d'arme et pas d'achat en boutique objet de craft composant de niveau 1 2 3 4 ou 5
+var Composant1 = Item{
+	Nom:         "Composant Niveau 1",
+	Prix:        10,
+	Description: "Composant basique pour une arme de niveau 1.",
+	Consommable: false,
+}
+var Composant2 = Item{
+	Nom:         "Composant Niveau 2",
+	Prix:        30,
+	Description: "Composant intermédiaire pour une arme de niveau 2.",
+	Consommable: false,
+}
+var Composant3 = Item{
+	Nom:         "Composant Niveau 3",
+	Prix:        50,
+	Description: "Composant avancé pour une arme de niveau 3.",
+	Consommable: false,
+}
+var Composant4 = Item{
+	Nom:         "Composant Niveau 4",
+	Prix:        70,
+	Description: "Composant expert pour une arme de niveau 4.",
+	Consommable: false,
+}
+var Composant5 = Item{
+	Nom:         "Composant Niveau 5",
+	Prix:        90,
+	Description: "Composant ultime pour une arme de niveau 5.",
+	Consommable: false,
+}
+
