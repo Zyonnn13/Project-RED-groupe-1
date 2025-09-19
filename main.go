@@ -1,8 +1,8 @@
 package main
 
 import (
-	armes "Project-RED-groupe-1/Armes"
 	shop "Project-RED-groupe-1/Shop"
+	armes "Project-RED-groupe-1/armes"
 	"Project-RED-groupe-1/combat"
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
@@ -147,15 +147,19 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		histoire.CorpoHistoire(character)
 		histoire.StartCorpo(character, inventory)
 		combat.LancerCombat(character, combat.Agentcorpo, inventory)
+		histoire.Acte1_Relic(character, inventory)
 
 	case "2":
 		histoire.NomadeHistoire()
 		histoire.StartNomade(character, inventory)
 		combat.LancerCombat(character, combat.Ncpd, inventory)
+		histoire.Acte1_Relic(character, inventory)
+
 	case "3":
 		histoire.GosseHistoire()
 		histoire.StartGosse(character, inventory)
 		combat.LancerCombat(character, combat.Adam, inventory)
+		histoire.Acte1_Relic(character, inventory)
 
 		if choice == "1" || choice == "2" || choice == "3" {
 		}
