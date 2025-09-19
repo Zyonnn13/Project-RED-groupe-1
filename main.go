@@ -173,6 +173,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		printlnSlow("1. Afficher les informations du personnage", delay)
 		printlnSlow("2. Accéder au contenu de l’inventaire", delay)
 		printlnSlow("3. Accéder à la Boutique", delay)
+
 		printlnSlow("4. Quitter", delay)
 		fmt.Print("Votre choix : ")
 
@@ -215,6 +216,8 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 				fmt.Println("\nA. Afficher les détails d’un objet")
 				fmt.Println("B. Acheter un objet")
 				fmt.Println("R. Revenir au menu principal")
+				fmt.Println("C. Crafter une arme")
+
 				fmt.Print("Votre choix : ")
 
 				shopChoice, _ := reader.ReadString('\n')
@@ -260,6 +263,10 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 					} else {
 						fmt.Println("Numéro invalide.")
 					}
+					fmt.Println("Appuie sur Entrée pour continuer.")
+					reader.ReadString('\n')
+				case "C":
+					shop.CraftArme(reader, eddies, inventory, int(delay))
 					fmt.Println("Appuie sur Entrée pour continuer.")
 					reader.ReadString('\n')
 
