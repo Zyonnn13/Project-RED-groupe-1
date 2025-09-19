@@ -44,7 +44,7 @@ func StartGosse(p *player.Player, inv *inventaire.Inventory) {
 		// Apparition de Jackie
 		fmt.Println("\nUn mystérieux allié apparaît : Jackie !")
 		fmt.Println("Grâce à lui, le combat se réengage et vous parvenez à battre la police.")
-		combat.LancerCombat(p, combat.Agentarasaka, inv)
+		combat.LancerCombat(p, combat.Ncpd, inv)
 
 		// Récompenses et progression
 		fmt.Println("\nVous et Jackie êtes désormais partenaires. Vous menez plusieurs contrats pendant les 6 prochains mois,")
@@ -70,11 +70,9 @@ func StartGosse(p *player.Player, inv *inventaire.Inventory) {
 		fmt.Println("Choix invalide. Le temps passe et l’opportunité s’éloigne...")
 	}
 
-	// Suite possible : missions supplémentaires
 	StartGosseSuite(p, inv)
 }
 
-// Suite de l’aventure Gosse des rues
 func StartGosseSuite(p *player.Player, inv *inventaire.Inventory) {
 	reader := bufio.NewReader(os.Stdin)
 

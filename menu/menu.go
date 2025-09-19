@@ -1,4 +1,4 @@
-package main
+package menu
 
 import (
 	"bufio"
@@ -12,13 +12,21 @@ import (
 	"Project-RED-groupe-1/player"
 )
 
+func printlnSlow(text string, delay time.Duration) {
+	for _, c := range text {
+		fmt.Printf("%c", c)
+		time.Sleep(delay)
+	}
+	fmt.Println()
+}
+
 func AfficherMenu(character *player.Player, eddies *monnaie.Eddies, inventory *inventaire.Inventory, delay time.Duration, reader *bufio.Reader) {
 	for {
-		printlnSlow("\n===== MENU PRINCIPAL =====", delay)
-		printlnSlow("1. Afficher les informations du personnage", delay)
-		printlnSlow("2. Accéder au contenu de l’inventaire", delay)
-		printlnSlow("3. Accéder à la Boutique", delay)
-		printlnSlow("4. Revenir au jeu", delay)
+		fmt.Println("\n===== MENU PRINCIPAL =====")
+		fmt.Println("1. Afficher les informations du personnage")
+		fmt.Println("2. Accéder au contenu de l’inventaire")
+		fmt.Println("3. Accéder à la Boutique")
+		fmt.Println("4. Revenir au jeu")
 		fmt.Print("Votre choix : ")
 
 		menuChoice, _ := reader.ReadString('\n')
@@ -26,16 +34,14 @@ func AfficherMenu(character *player.Player, eddies *monnaie.Eddies, inventory *i
 
 		switch menuChoice {
 		case "1":
-			printlnSlow("\n=== INFOS PERSONNAGE ===", delay)
-			fmt.Printf("Nom : %s\nClasse : %s\nSanté : %d/%d\nEddies : %d\n",
+			fmt.Printf("\nNom : %s\nClasse : %s\nSanté : %d/%d\nEddies : %d\n",
 				character.Name, character.Class, character.HP, character.MaxHP, eddies.GetBalance())
-			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
+			fmt.Println("Appuie sur Entrée pour revenir au menu.")
 			reader.ReadString('\n')
 
 		case "2":
-			printlnSlow("\n=== INVENTAIRE ===", delay)
 			inventory.ShowInventory()
-			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
+			fmt.Println("Appuie sur Entrée pour revenir au menu.")
 			reader.ReadString('\n')
 
 		case "3":
@@ -45,7 +51,7 @@ func AfficherMenu(character *player.Player, eddies *monnaie.Eddies, inventory *i
 			return
 
 		default:
-			printlnSlow("Choix invalide. Veuillez réessayer.", delay)
+			fmt.Println("Choix invalide. Veuillez réessayer.")
 		}
 	}
 }
@@ -105,6 +111,14 @@ func ouvrirBoutique(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inv
 			if index >= 1 && index <= len(items) {
 				item := items[index-1]
 				if eddies.Spend(item.Prix) {
+					// ✅ Ajouter l’objet directement à l’inventaire
+					inventory.AddItem(inventaire.Item{
+						Nom:         item.Nom,
+						Description: item.Description,
+						Type:        item.Type,
+						Effet:       item.Effet,
+						Consommable: item.Consommable,
+					})
 					printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
 					fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
 				} else {
