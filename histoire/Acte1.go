@@ -61,7 +61,7 @@ func Acte1_Relic(p *player.Player, inv *inventaire.Inventory) {
 	fmt.Println("L’alarme retentit, les gardes rappliquent !")
 
 	fmt.Println("\nUn combat commence contre les agents d’Arasaka !")
-	combat.LancerCombat(p, combat.Agentcorpo, inv) // à définir dans combat.go
+	combat.LancerCombat(p, combat.Agentcorpo, inv)
 
 	// --- Jackie blessé ---
 	fmt.Println("\nVous réussissez à vous enfuir, mais Jackie est gravement blessé.")

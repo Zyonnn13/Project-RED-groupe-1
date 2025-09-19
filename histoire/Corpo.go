@@ -35,7 +35,7 @@ func StartCorpo(p *player.Player, inv *inventaire.Inventory) {
 	switch choice {
 	case "1":
 		fmt.Println("Jenkins t’accorde sa confiance, mais tu te retrouves sur le terrain face à des opposants.")
-		ennemi := combat.Ncpd
+		ennemi := combat.Opposant
 		fmt.Printf("\n%s apparaît !\n", ennemi.Name)
 		fmt.Printf("HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
 		fmt.Println("\nUn combat commence ! Prépare-toi à riposter.")
@@ -57,7 +57,7 @@ func StartCorpo(p *player.Player, inv *inventaire.Inventory) {
 
 	case "3":
 		fmt.Println("Refuser un ordre direct de Jenkins est dangereux... Tu sens que cela ne va pas bien se terminer.")
-		ennemi := combat.Agentcorpo
+		ennemi := combat.Opposant
 		fmt.Printf("\n%s apparaît !\n", ennemi.Name)
 		fmt.Printf("HP : %d   |    ATK : %d\n", ennemi.HP, ennemi.Attack)
 		fmt.Println("\nUn combat commence ! Prépare-toi à riposter.")
@@ -99,18 +99,16 @@ func SuiteCorpoChoix1(p *player.Player, inv *inventaire.Inventory) {
 		ennemi := combat.Agentarasaka
 		combat.LancerCombat(p, ennemi, inv)
 
-		// Récompense spécifique au choix 1
-		fmt.Println("\n🎁 Après le combat, tu trouves un Cyberdeck et 100 eddies.")
+		fmt.Println("\n🎁 Après le combat, tu trouves un Composant de niveau 1 et 100 eddies.")
 		inv.AddItem(inventaire.Item{
-			Nom:         "Cyberdeck Mk I",
-			Description: "Permet d’effectuer des hacks rapides",
-			Type:        "hack",
+			Nom:         "Composant",
+			Description: "Permet de crafter un arme",
+			Type:        "craft",
 			Effet:       0,
 			Consommable: false,
 		})
 		p.Eddies.Add(100)
 
-		// Suite narration spécifique
 		fmt.Println("\nEn explorant la zone, tu trouves un terminal sécurisé contenant des infos sensibles.")
 		fmt.Println("1 - Télécharger les données pour Jenkins")
 		fmt.Println("2 - Les effacer pour éviter que d'autres ne s’en servent")

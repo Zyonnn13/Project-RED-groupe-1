@@ -7,31 +7,33 @@ import (
 )
 
 type Ennemis struct {
-	Name      string
-	MaxHP     int
-	HP        int
-	Attack    int
-	Degats    int
-	Precision float64
+	Name            string
+	MaxHP           int
+	HP              int
+	Attack          int
+	Degats          int
+	Precision       float64
+	SurchauffeTours int
+	SurchauffeDegats int
 }
 
-var Opposant = Ennemis{"Opposant", 100, 100, 50, 50, 0.50}
-var Valentinos = Ennemis{"Valentinos", 100, 100, 50, 50, 0.50}
-var Ncpd = Ennemis{"Ncpd", 100, 100, 50, 50, 0.50}
-var Agentcorpo = Ennemis{"Agent Corpo", 100, 100, 50, 50, 0.50}
-var Agentrivaux = Ennemis{"Agent Rival", 100, 100, 50, 50, 0.50}
-var Kirk = Ennemis{"Kirk", 120, 120, 60, 50, 0.50}
-var Agentsecu = Ennemis{"Agent de Sécurité", 100, 100, 50, 50, 0.50}
-var Agentarasaka = Ennemis{"Agent Arasaka", 100, 100, 50, 50, 0.50}
-var Drone = Ennemis{"Drone", 75, 75, 40, 50, 0.50}
-var Wraiths = Ennemis{"Wraiths", 100, 100, 50, 50, 0.50}
-var Tygerclaws = Ennemis{"Tyger Claws", 100, 100, 50, 50, 0.50}
-var Chefclaws = Ennemis{"Chef des Tyger Claws", 150, 150, 100, 50, 0.50}
-var Dronelourd = Ennemis{"Drone Lours", 90, 90, 50, 50, 0.50}
-var Tourelleauto = Ennemis{"Tourelle Automatique", 10, 10, 200, 50, 0.50}
-var Sniper = Ennemis{"Sniper", 50, 50, 100, 50, 0.50}
-var Netrunner = Ennemis{"Netrunner", 50, 50, 100, 50, 0.50}
-var Adam = Ennemis{"Adam Smasher", 200, 200, 200, 50, 0.50}
+var Opposant = Ennemis{"Opposant", 100, 100, 50, 30, 0.50, 0,0}
+var Valentinos = Ennemis{"Valentinos", 100, 100, 50, 30, 0.50, 0,0}
+var Ncpd = Ennemis{"Ncpd", 100, 100, 50, 30, 0.50, 0,0}
+var Agentcorpo = Ennemis{"Agent Corpo", 100, 100, 50, 30, 0.50, 0,0}
+var Agentrivaux = Ennemis{"Agent Rival", 100, 100, 50, 30, 0.50, 0,0}
+var Kirk = Ennemis{"Kirk", 120, 120, 60, 30, 0.50, 0,0}
+var Agentsecu = Ennemis{"Agent de Sécurité", 100, 100, 50, 30, 0.50, 0,0}
+var Agentarasaka = Ennemis{"Agent Arasaka", 100, 100, 50, 30, 0.50, 0,0}
+var Drone = Ennemis{"Drone", 75, 75, 40, 30, 0.50, 0,0}
+var Wraiths = Ennemis{"Wraiths", 100, 100, 50, 40, 0.50, 0,0}
+var Tygerclaws = Ennemis{"Tyger Claws", 100, 100, 50, 50, 0.50, 0,0}
+var Chefclaws = Ennemis{"Chef des Tyger Claws", 150, 150, 100, 50, 0.50, 0,0}
+var Dronelourd = Ennemis{"Drone Lours", 90, 90, 50, 50, 0.50, 0,0}
+var Tourelleauto = Ennemis{"Tourelle Automatique", 10, 10, 200, 50, 0.50, 0,0}
+var Sniper = Ennemis{"Sniper", 50, 50, 100, 50, 0.50, 0,0}
+var Netrunner = Ennemis{"Netrunner", 50, 50, 100, 50, 0.50, 0,0}
+var Adam = Ennemis{"Adam Smasher", 200, 200, 200, 50, 0.50, 0,0}
 
 func (a Ennemis) Attaque() int {
 	if rand.Float64() <= a.Precision {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	shop "Project-RED-groupe-1/Shop"
 	armes "Project-RED-groupe-1/armes"
 	"Project-RED-groupe-1/combat"
 	"Project-RED-groupe-1/histoire"
@@ -137,7 +136,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	character.MaxHP = 100
 	character.AfficherBarreDeVie("compact")
 
-	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme de débarquement avec 40 pourcent de précision. Bonne chance", eddies.GetBalance()), delay)
+	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme attention elle a un taux de precision, et un hack pour bien commencer ton aventure. Bonne chance", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
@@ -165,131 +164,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
-
+	AfficherMenu(character, eddies, inventory, delay, reader)
 	inventory.ShowInventory()
-
-	for {
-		printlnSlow("\n===== MENU PRINCIPAL =====", delay)
-		printlnSlow("1. Afficher les informations du personnage", delay)
-		printlnSlow("2. Accéder au contenu de l’inventaire", delay)
-		printlnSlow("3. Accéder à la Boutique", delay)
-
-		printlnSlow("4. Quitter", delay)
-		fmt.Print("Votre choix : ")
-
-		menuChoice, _ := reader.ReadString('\n')
-		menuChoice = strings.TrimSpace(menuChoice)
-
-		switch menuChoice {
-		case "1":
-			printlnSlow("\n=== INFOS PERSONNAGE ===", delay)
-			fmt.Printf("Nom : %s\n", character.Name)
-			fmt.Printf("Classe : %s\n", character.Class)
-			fmt.Printf("Santé : %d/%d\n", character.HP, character.MaxHP)
-			fmt.Printf("Eddies :%d\n ", eddies.GetBalance())
-			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
-			reader.ReadString('\n')
-
-		case "2":
-			printlnSlow("\n=== INVENTAIRE ===", delay)
-			inventory.ShowInventory()
-			printlnSlow("Appuie sur Entrée pour revenir au menu.", delay)
-			reader.ReadString('\n')
-
-		case "3":
-			items := []shop.Item{
-				shop.Maxdoc,
-				shop.Revitalisant,
-				shop.Frag,
-				shop.Flash,
-				shop.Redemarrage,
-				shop.Surchauffe,
-				shop.Circuit,
-			}
-
-			for {
-				printlnSlow("\n===== MENU BOUTIQUE =====", delay)
-				for i, item := range items {
-					fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
-				}
-
-				fmt.Println("\nA. Afficher les détails d’un objet")
-				fmt.Println("B. Acheter un objet")
-				fmt.Println("R. Revenir au menu principal")
-				fmt.Println("C. Crafter une arme")
-
-				fmt.Print("Votre choix : ")
-
-				shopChoice, _ := reader.ReadString('\n')
-				shopChoice = strings.TrimSpace(strings.ToUpper(shopChoice))
-
-				switch shopChoice {
-				case "A":
-					fmt.Print("Entrez le numéro de l’objet pour voir les détails : ")
-					numStr, _ := reader.ReadString('\n')
-					numStr = strings.TrimSpace(numStr)
-					index := -1
-					fmt.Sscanf(numStr, "%d", &index)
-					if index >= 1 && index <= len(items) {
-						item := items[index-1]
-						fmt.Printf("\nNom : %s\n", item.Nom)
-						fmt.Printf("Prix : %d eddies\n", item.Prix)
-						fmt.Printf("Description : %s\n", item.Description)
-						if item.Consommable {
-							fmt.Println("Type : Consommable")
-						} else {
-							fmt.Println("Type : Hack")
-						}
-					} else {
-						fmt.Println("Numéro invalide.")
-					}
-					fmt.Println("Appuie sur Entrée pour continuer.")
-					reader.ReadString('\n')
-
-				case "B":
-					fmt.Print("Entrez le numéro de l’objet à acheter : ")
-					numStr, _ := reader.ReadString('\n')
-					numStr = strings.TrimSpace(numStr)
-					index := -1
-					fmt.Sscanf(numStr, "%d", &index)
-					if index >= 1 && index <= len(items) {
-						item := items[index-1]
-						if eddies.Spend(item.Prix) {
-							printlnSlow(fmt.Sprintf("Vous avez acheté %s pour %d eddies.", item.Nom, item.Prix), delay)
-							fmt.Printf("Eddies restants : %d eddies\n", eddies.GetBalance())
-						} else {
-							printlnSlow("Vous n’avez pas assez d’eddies pour cet achat.", delay)
-						}
-					} else {
-						fmt.Println("Numéro invalide.")
-					}
-					fmt.Println("Appuie sur Entrée pour continuer.")
-					reader.ReadString('\n')
-				case "C":
-					shop.CraftArme(reader, eddies, inventory, int(delay))
-					fmt.Println("Appuie sur Entrée pour continuer.")
-					reader.ReadString('\n')
-
-				case "R":
-					fmt.Println("Retour au menu principal...")
-
-				default:
-					fmt.Println("Choix invalide. Veuillez réessayer.")
-				}
-
-				if shopChoice == "R" {
-					break
-				}
-			}
-		case "4":
-			printlnSlow("\n=== QUITTER ===", delay)
-			printlnSlow("Appuie sur Entrée pour quitter le jeu.", delay)
-			reader.ReadString('\n')
-			return
-
-		default:
-			printlnSlow("Choix invalide. Veuillez réessayer.", delay)
-		}
-	}
 
 }

@@ -94,4 +94,3 @@ var Composant5 = Item{
 	Description: "Composant ultime pour une arme de niveau 5.",
 	Consommable: false,
 }
-

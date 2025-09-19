@@ -39,7 +39,7 @@ func StartGosse(p *player.Player, inv *inventaire.Inventory) {
 
 		// Combat contre la police
 		fmt.Println("La police arrive sur le champ ! Combat engagé !")
-		combat.LancerCombat(p, combat.Agentarasaka, inv)
+		combat.LancerCombat(p, combat.Ncpd, inv)
 
 		// Apparition de Jackie
 		fmt.Println("\nUn mystérieux allié apparaît : Jackie !")
