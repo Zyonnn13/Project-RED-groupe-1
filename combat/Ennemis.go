@@ -15,16 +15,16 @@ type Ennemis struct {
 	Precision float64
 }
 
-var Opposant = Ennemis{"Opposant", 100, 100, 50, 50, 0.50}
-var Valentinos = Ennemis{"Valentinos", 100, 100, 50, 50, 0.50}
-var Ncpd = Ennemis{"Ncpd", 100, 100, 50, 50, 0.50}
-var Agentcorpo = Ennemis{"Agent Corpo", 100, 100, 50, 50, 0.50}
-var Agentrivaux = Ennemis{"Agent Rival", 100, 100, 50, 50, 0.50}
-var Kirk = Ennemis{"Kirk", 120, 120, 60, 50, 0.50}
-var Agentsecu = Ennemis{"Agent de Sécurité", 100, 100, 50, 50, 0.50}
-var Agentarasaka = Ennemis{"Agent Arasaka", 100, 100, 50, 50, 0.50}
-var Drone = Ennemis{"Drone", 75, 75, 40, 50, 0.50}
-var Wraiths = Ennemis{"Wraiths", 100, 100, 50, 50, 0.50}
+var Opposant = Ennemis{"Opposant", 100, 100, 50, 30, 0.50}
+var Valentinos = Ennemis{"Valentinos", 100, 100, 50, 30, 0.50}
+var Ncpd = Ennemis{"Ncpd", 100, 100, 50, 30, 0.50}
+var Agentcorpo = Ennemis{"Agent Corpo", 100, 100, 50, 30, 0.50}
+var Agentrivaux = Ennemis{"Agent Rival", 100, 100, 50, 30, 0.50}
+var Kirk = Ennemis{"Kirk", 120, 120, 60, 30, 0.50}
+var Agentsecu = Ennemis{"Agent de Sécurité", 100, 100, 50, 30, 0.50}
+var Agentarasaka = Ennemis{"Agent Arasaka", 100, 100, 50, 30, 0.50}
+var Drone = Ennemis{"Drone", 75, 75, 40, 30, 0.50}
+var Wraiths = Ennemis{"Wraiths", 100, 100, 50, 40, 0.50}
 var Tygerclaws = Ennemis{"Tyger Claws", 100, 100, 50, 50, 0.50}
 var Chefclaws = Ennemis{"Chef des Tyger Claws", 150, 150, 100, 50, 0.50}
 var Dronelourd = Ennemis{"Drone Lours", 90, 90, 50, 50, 0.50}

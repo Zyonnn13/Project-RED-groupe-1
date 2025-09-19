@@ -137,7 +137,7 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 	character.MaxHP = 100
 	character.AfficherBarreDeVie("compact")
 
-	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme de débarquement avec 40 pourcent de précision. Bonne chance", eddies.GetBalance()), delay)
+	printlnSlow(fmt.Sprintf("\nTu commences l’aventure avec %d eddies en poche. Utilise-les avec sagesse ! Bien évidemment on t'a donné une arme attention elle a un taux de precision, et un hack pour bien commencer ton aventure. Bonne chance", eddies.GetBalance()), delay)
 
 	printlnSlow("\nAppuie sur Entrée pour démarrer l'histoire...", delay)
 	reader.ReadString('\n')
