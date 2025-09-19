@@ -15,7 +15,8 @@ Un jeu vidéo narratif a choix mutiples dans un univers cybernétique et futuris
 
 
 ## Structure Projet RED 
-
+Image de la structure du code 
+"C:\Users\eustm\Downloads\screen.png"
 
 
 ## Language de Programation de notre projet :
