@@ -18,6 +18,12 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 	fmt.Printf("\n Un combat commence contre %s !\n", ennemi.Name)
 
 	for joueur.HP > 0 && ennemi.HP > 0 {
+		TickSurchauffe(&ennemi)
+		if ennemi.HP <= 0 {
+			fmt.Printf(" %s est vaincu !\n", ennemi.Name)
+			break
+		}
+
 		afficherStats(joueur, ennemi)
 
 		actionDone := false
@@ -25,6 +31,7 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 			fmt.Println("\nQue veux-tu faire ?")
 			fmt.Println("1 - Attaquer avec votre arme")
 			fmt.Println("2 - Inventaire")
+			fmt.Println("3 - Utiliser Surchauffe")
 			fmt.Print("\nChoix : ")
 
 			choice, _ := reader.ReadString('\n')
@@ -61,6 +68,9 @@ func LancerCombat(joueur *player.Player, ennemi Ennemis, inv *inventaire.Invento
 				if inv.UseItem(itemChoice, joueur) {
 					actionDone = true
 				}
+			case "3":
+				ApplySurchauffe(&ennemi)
+				actionDone = true
 
 			default:
 				fmt.Println("Choix invalide, ton tour est perdu !")
