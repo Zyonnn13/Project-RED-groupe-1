@@ -17,14 +17,13 @@ Un jeu vidéo narratif a choix mutiples dans un univers cybernétique et futuris
 
 Voici l’organisation des fichiers et dossiers de votre projet de jeu :
 
-├── armes/ # Gestion des armes du jeu
-│ └── armes.go
-│
-├── combat/ # Mécaniques de combat et ennemis
-│ ├── hack.go # Piratage en combat
-│ ├── surchauffe.go # Effets de surchauffe
-│ ├── combat.go # Logique générale du combat
-│ └── Ennemis.go # Définition des ennemis
+armes/ # Gestion des armes du jeu
+     -armes.go
+ combat/ # Mécaniques de combat et ennemis
+    - hack.go # Piratage en combat
+    - surchauffe.go # Effets de surchauffe
+    - combat.go # Logique générale du combat
+    - Ennemis.go # Définition des ennemis
 │
 ├── histoire/ # Narration et scénarios
 │ ├── Acte1.go # Premier acte de l’histoire
