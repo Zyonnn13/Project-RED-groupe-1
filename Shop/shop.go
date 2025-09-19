@@ -1,5 +1,14 @@
 package shop
 
+import (
+	"Project-RED-groupe-1/inventaire"
+	"Project-RED-groupe-1/monnaie"
+	"bufio"
+	"fmt"
+	"strings"
+	"time"
+)
+
 type Item struct {
 	Nom         string
 	Prix        int
@@ -93,4 +102,50 @@ var Composant5 = Item{
 	Prix:        90,
 	Description: "Composant ultime pour une arme de niveau 5.",
 	Consommable: false,
+}
+
+func AfficherMenuBoutique(reader *bufio.Reader, eddies *monnaie.Eddies, inventory *inventaire.Inventory, delay time.Duration) {
+	items := []Item{Maxdoc, Revitalisant, Frag, Flash, Redemarrage, Surchauffe, Circuit}
+
+	for {
+		fmt.Println("\n===== BOUTIQUE =====")
+		for i, item := range items {
+			fmt.Printf("%d. %s - %d eddies\n", i+1, item.Nom, item.Prix)
+		}
+		fmt.Println("C. Crafter une arme")
+		fmt.Println("R. Revenir au menu")
+
+		fmt.Print("Votre choix : ")
+		choice, _ := reader.ReadString('\n')
+		choice = strings.TrimSpace(strings.ToUpper(choice))
+
+		switch choice {
+		case "C":
+			CraftArme(reader, eddies, inventory, int(delay))
+		case "R":
+			return
+		default:
+			index := -1
+			fmt.Sscanf(choice, "%d", &index)
+			if index >= 1 && index <= len(items) {
+				item := items[index-1]
+				if eddies.Spend(item.Prix) {
+					// Crée l’item pour l’inventaire
+					newItem := inventaire.Item{
+						Nom:         item.Nom,
+						Description: item.Description,
+						Type:        item.Type,
+						Effet:       item.Effet,
+						Consommable: item.Consommable,
+					}
+					inventory.AddItem(newItem)
+					fmt.Printf("✅ Vous avez acheté %s pour %d eddies.\n", item.Nom, item.Prix)
+				} else {
+					fmt.Println("❌ Vous n’avez pas assez d’eddies pour cet achat.")
+				}
+			} else {
+				fmt.Println("❌ Choix invalide.")
+			}
+		}
+	}
 }

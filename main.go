@@ -5,6 +5,7 @@ import (
 	"Project-RED-groupe-1/combat"
 	"Project-RED-groupe-1/histoire"
 	"Project-RED-groupe-1/inventaire"
+	"Project-RED-groupe-1/menu"
 	"Project-RED-groupe-1/monnaie"
 	"Project-RED-groupe-1/player"
 	"bufio"
@@ -18,6 +19,14 @@ import (
 	"github.com/faiface/beep/speaker"
 )
 
+func CheckForMenu(character *player.Player, eddies *monnaie.Eddies, inventory *inventaire.Inventory, delay time.Duration, reader *bufio.Reader) {
+	fmt.Println("\nAppuie sur Entrée pour continuer, ou tape 'm' pour ouvrir le menu.")
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(strings.ToLower(input))
+	if input == "m" {
+		menu.AfficherMenu(character, eddies, inventory, delay, reader)
+	}
+}
 func printlnSlow(text string, delay time.Duration) {
 	for _, c := range text {
 		fmt.Printf("%c", c)
@@ -146,25 +155,30 @@ ________/\\\\\\\\\________________/\\\__________________________________________
 		histoire.CorpoHistoire(character)
 		histoire.StartCorpo(character, inventory)
 		combat.LancerCombat(character, combat.Agentcorpo, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 		histoire.Acte1_Relic(character, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 
 	case "2":
 		histoire.NomadeHistoire()
 		histoire.StartNomade(character, inventory)
 		combat.LancerCombat(character, combat.Ncpd, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 		histoire.Acte1_Relic(character, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 
 	case "3":
 		histoire.GosseHistoire()
 		histoire.StartGosse(character, inventory)
 		combat.LancerCombat(character, combat.Adam, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 		histoire.Acte1_Relic(character, inventory)
+		CheckForMenu(character, eddies, inventory, delay, reader)
 
 		if choice == "1" || choice == "2" || choice == "3" {
 		}
 		printlnSlow("Veuillez entrer 1, 2 ou 3", delay)
 	}
-	AfficherMenu(character, eddies, inventory, delay, reader)
 	inventory.ShowInventory()
 
 }
