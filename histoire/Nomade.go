@@ -50,7 +50,6 @@ func StartNomade(p *player.Player, inv *inventaire.Inventory) {
 			fmt.Println("\nLe plan échoue partiellement ! Les gardes remarquent quelque chose et vous devez combattre.")
 			combat.LancerCombat(p, combat.Valentinos, inv)
 		}
-		// Éventuel mini-combat ou test de chance
 		combat.LancerCombat(p, combat.Valentinos, inv)
 		fmt.Println("\nVous réussissez à semer les gardes d’Arasaka !")
 	case "3":
@@ -97,8 +96,17 @@ func StartNomadeSuite(p *player.Player, inv *inventaire.Inventory) {
 			fmt.Println("\nVous parvenez à passer sans problème. Aucun bandit sur votre route.")
 			p.Eddies.Add(30)
 		} else {
-			fmt.Println("\nUn petit groupe de bandits tente de vous bloquer ! Préparez-vous au combat.")
-			combat.LancerCombat(p, combat.Agentarasaka, inv)
+			fmt.Println("\nUn autre clan tente de vous bloquer ! Préparez-vous au combat.")
+			combat.LancerCombat(p, combat.Wraiths, inv)
+			fmt.Println("\n🎁 Tu fouilles la zone et trouves un Maxdoc et 100 eddies !")
+			inv.AddItem(inventaire.Item{
+				Nom:         "Maxdoc M.K 1",
+				Description: "Soin rapide de 50 PV",
+				Type:        "soin",
+				Effet:       50,
+				Consommable: true,
+			})
+			p.Eddies.Add(100)
 			fmt.Println("\nVous continuez votre route sain et sauf.")
 		}
 
@@ -116,6 +124,15 @@ func StartNomadeSuite(p *player.Player, inv *inventaire.Inventory) {
 		fmt.Println("\nTu travailles sur ton véhicule, améliorant moteur et suspension.")
 		p.Eddies.Add(30)
 		fmt.Println("🎁 Tu gagnes 30 eddies en vendant de vieilles pièces.")
+		fmt.Println("\n🎁 Tu fouilles la zone et trouves un Maxdoc et 100 eddies !")
+		inv.AddItem(inventaire.Item{
+			Nom:         "Maxdoc M.K 1",
+			Description: "Soin rapide de 50 PV",
+			Type:        "soin",
+			Effet:       50,
+			Consommable: true,
+		})
+		p.Eddies.Add(100)
 
 	default:
 		fmt.Println("Choix invalide. Vous perdez du temps et devez improviser votre route...")
@@ -146,5 +163,4 @@ func StartNomadeSuite(p *player.Player, inv *inventaire.Inventory) {
 	}
 
 	fmt.Println("\nFélicitations ! Vous avez complété la première mission Nomade à Night City.")
-	fmt.Println("L’histoire peut continuer avec d’autres missions ou combats.")
 }
